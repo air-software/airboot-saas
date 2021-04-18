@@ -104,12 +104,12 @@ public class SysUserController extends BaseController {
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         Map<String, Object> dataMap = new HashMap<>();
         
-        // 只有超级租户管理员可以为其他人分配管理员角色
+        // 只有管理员可以为其他人分配管理员角色
         List<SysRole> roles = roleService.getAll();
-        boolean isTenantAdmin = LoginUserContextHolder.getLoginUser().getUser().isTenantAdmin();
+        boolean isAdmin = LoginUserContextHolder.getLoginUser().getUser().isAdmin();
         final Long[] adminRoleId = {Constants.TENANT_ADMIN_ROLE_ID};
-        dataMap.put("roles", isTenantAdmin ? roles : roles.stream().filter(r -> {
-            // 去掉管理员角色
+        dataMap.put("roles", isAdmin ? roles : roles.stream().filter(r -> {
+            // 如果不是管理员，则去掉管理员角色
             if (r.isAdmin()) {
                 adminRoleId[0] = r.getId();
                 return false;
@@ -123,8 +123,8 @@ public class SysUserController extends BaseController {
             dataMap.put("postIds", postService.getIdListByUserId(userId));
             
             List<Long> roleIds = roleService.getIdListByUserId(userId);
-            // 在已选ID中去掉管理员角色ID
-            dataMap.put("roleIds", isTenantAdmin ? roleIds : roleIds.stream().filter(roleId -> !roleId.equals(adminRoleId[0])).collect(Collectors.toList()));
+            // 如果不是管理员，则在已选ID中去掉管理员角色ID
+            dataMap.put("roleIds", isAdmin ? roleIds : roleIds.stream().filter(roleId -> !roleId.equals(adminRoleId[0])).collect(Collectors.toList()));
         }
         return AjaxResult.success(dataMap);
     }

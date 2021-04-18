@@ -1,6 +1,7 @@
 package com.airboot.project.system.service.impl;
 
 import com.airboot.common.core.aspectj.lang.annotation.DataScope;
+import com.airboot.common.core.constant.Constants;
 import com.airboot.common.core.exception.CustomException;
 import com.airboot.common.core.utils.StringUtils;
 import com.airboot.common.core.utils.spring.SpringUtils;
@@ -10,6 +11,7 @@ import com.airboot.project.system.mapper.relation.SysRoleDeptMapper;
 import com.airboot.project.system.mapper.relation.SysRoleMenuMapper;
 import com.airboot.project.system.mapper.relation.SysUserRoleMapper;
 import com.airboot.project.system.model.entity.SysRole;
+import com.airboot.project.system.model.entity.SysUser;
 import com.airboot.project.system.model.entity.relation.SysRoleDept;
 import com.airboot.project.system.model.entity.relation.SysRoleMenu;
 import com.airboot.project.system.model.vo.SearchSysRoleVO;
@@ -157,11 +159,22 @@ public class SysRoleServiceImpl implements ISysRoleService {
         if (role.getId() == null) {
             throw new CustomException("未找到要操作的角色");
         }
-        // 只有超级租户管理员可以操作其他管理员角色
-        // 即其他管理员角色也不允许修改管理员角色，必须由超级租户管理员统一管控
-        boolean isTenantAdmin = LoginUserContextHolder.getLoginUser().getUser().isTenantAdmin();
-        if (role.isAdmin() && !isTenantAdmin) {
-            throw new CustomException("不允许操作管理员角色，如需修改请联系平台客服");
+        // 超级租户管理员可以操作所有租户的管理员，租户管理员只能操作自己租户内的管理员，其他角色不允许操作管理员
+        SysUser user = LoginUserContextHolder.getLoginUser().getUser();
+        // 从库里查询要操作的角色
+        SysRole editRole = roleMapper.selectById(role.getId());
+        
+        // 如果不是超级租户管理员，却要操作超级租户管理员，则返回异常
+        if (!user.isTenantAdmin() && editRole.isTenantAdmin()) {
+            throw new CustomException("不允许操作超级租户管理员角色");
+        }
+        // 如果不是管理员，却要操作管理员角色，则返回异常
+        if (!user.isAdmin() && editRole.isAdmin()) {
+            throw new CustomException("不允许操作管理员角色，如需修改请联系贵司管理员");
+        }
+        // 如果要操作的是管理员，但要修改的是它的roleKey，则也不允许。只有超级租户管理员可以修改管理员的roleKey。
+        if (!user.isTenantAdmin() && editRole.isAdmin() && !Constants.ADMIN_ROLE_KEY.equals(role.getRoleKey())) {
+            throw new CustomException("不允许修改管理员角色的权限字符");
         }
     }
     

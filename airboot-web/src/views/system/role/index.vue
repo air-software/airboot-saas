@@ -130,6 +130,7 @@
             v-hasPermi="['system:role:edit']"
           >数据权限</el-button>
           <el-button
+            v-if="$isTenantAdmin || scope.row.roleKey !== 'admin'"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -155,7 +156,7 @@
           <el-input v-model="form.roleName" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="权限字符" prop="roleKey">
-          <el-input v-model="form.roleKey" placeholder="请输入权限字符" />
+          <el-input v-model="form.roleKey" placeholder="请输入权限字符" :disabled="roleKeyDisabled" @click.native="roleKeyDisabledTips" />
         </el-form-item>
         <el-form-item label="角色顺序" prop="roleSort">
           <el-input-number v-model="form.roleSort" controls-position="right" :min="0" />
@@ -292,6 +293,11 @@ export default {
         ]
       },
       submitLoading: false
+    }
+  },
+  computed: {
+    roleKeyDisabled() {
+      return !this.$isTenantAdmin && this.form.roleKey === 'admin'
     }
   },
   created() {
@@ -509,6 +515,11 @@ export default {
         }).then(data => {
           this.download(data)
         }).catch(function() {})
+    },
+    roleKeyDisabledTips() {
+      if (this.roleKeyDisabled) {
+        this.msgInfo('不允许修改管理员角色的权限字符')
+      }
     }
   }
 }

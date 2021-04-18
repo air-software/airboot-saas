@@ -94,6 +94,36 @@ public class SysUserServiceImpl implements ISysUserService {
     }
     
     /**
+     * 查询所有正常用户
+     */
+    @Override
+    public List<SysUser> getAllNormalList() {
+        return userMapper.selectList(new LambdaQueryWrapper<SysUser>()
+            .eq(SysUser::getStatus, StatusEnum.正常)
+            .eq(SysUser::isDeleted, false));
+    }
+    
+    /**
+     * 查询正常用户
+     *
+     * @param id
+     */
+    @Override
+    public SysUser getNormalOne(Long id) {
+        return userMapper.findNormalById(id);
+    }
+    
+    /**
+     * 根据手机号查询正常用户
+     *
+     * @param mobile
+     */
+    @Override
+    public SysUser getNormalOneByMobile(String mobile) {
+        return userMapper.findNormalByMobile(mobile);
+    }
+    
+    /**
      * 通过用户ID查询用户
      *
      * @param userId 用户ID
@@ -162,7 +192,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public void validateUser(SysUser user, boolean isUpdate) {
         String operType = isUpdate ? "修改" : "新增";
-        if (!this.checkUsernameUnique(user)) {
+        if (StringUtils.isNotBlank(user.getUsername()) && !this.checkUsernameUnique(user)) {
             throw new CustomException(operType + "用户失败，用户名【" + user.getUsername() + "】已存在");
         } else if (!this.checkMobileUnique(user)) {
             throw new CustomException(operType + "用户失败，手机号码【" + user.getMobile() + "】已存在");
@@ -171,7 +201,7 @@ public class SysUserServiceImpl implements ISysUserService {
         }
         
         // 正则校验
-        if (!StringUtils.isUsername(user.getUsername())) {
+        if (StringUtils.isNotBlank(user.getUsername()) && !StringUtils.isUsername(user.getUsername())) {
             throw new CustomException(operType + "用户失败，用户名【" + user.getUsername() + "】不符合格式规范");
         } else if (!StringUtils.isMobile(user.getMobile())) {
             throw new CustomException(operType + "用户失败，手机号码【" + user.getMobile() + "】不符合格式规范");
@@ -238,21 +268,20 @@ public class SysUserServiceImpl implements ISysUserService {
         if (user.getId() == null) {
             throw new CustomException("未找到要操作的用户");
         }
-        // 操作人本身是否是超级租户管理员
-        boolean isTenantAdmin = LoginUserContextHolder.getLoginUser().getUser().isTenantAdmin();
-        // 从数据库里查出带角色信息的用户数据
-        SysUser existUser = this.getById(user.getId());
-        // 如果要操作的对象是管理员用户
-        if (existUser.isAdmin()) {
-            // 任何人不允许停用管理员用户
-            if (StatusEnum.停用.equals(user.getStatus())) {
-                throw new CustomException("不允许停用管理员用户");
-            }
-            // 如果操作人本身不是超级租户管理员，则不允许修改管理员的用户信息
-            // 即就管理员本身也无法修改管理员信息，必须由超级租户管理员来统一管控
-            if (!isTenantAdmin) {
-                throw new CustomException("不允许操作管理员用户，如需修改请联系平台客服");
-            }
+        // 如果操作人本身是超级租户管理员，则可以操作所有租户的所有用户
+        // 如果操作人是租户管理员，则可以操作租户内的所有用户
+        // 如果操作人是其他角色，则可以操作除管理员外的所有用户
+        SysUser loginUser = LoginUserContextHolder.getLoginUser().getUser();
+        // 从数据库里查出要操作的带角色信息的用户数据
+        SysUser editUser = this.getById(user.getId());
+        
+        // 如果不是超级租户管理员，却要操作超级租户管理员，则返回异常
+        if (!loginUser.isTenantAdmin() && editUser.isTenantAdmin()) {
+            throw new CustomException("不允许操作超级租户管理员用户");
+        }
+        // 如果不是管理员，却要操作管理员，则返回异常
+        if (!loginUser.isAdmin() && editUser.isAdmin()) {
+            throw new CustomException("不允许操作管理员，如需修改请联系贵司管理员");
         }
     }
     

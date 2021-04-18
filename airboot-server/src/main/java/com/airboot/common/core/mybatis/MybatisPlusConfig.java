@@ -39,7 +39,7 @@ public class MybatisPlusConfig {
                 try {
                     return new LongValue(LoginUserContextHolder.getLoginUser().getTenantId());
                 } catch (Exception e) {
-                    return new LongValue(0);
+                    return new LongValue(-1);
                 }
             }
 

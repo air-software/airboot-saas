@@ -1,6 +1,7 @@
 package com.airboot.project.system.model.entity;
 
 import com.airboot.common.core.aspectj.lang.annotation.Excel;
+import com.airboot.common.core.constant.Constants;
 import com.airboot.common.core.utils.StringUtils;
 import com.airboot.common.model.entity.TenantEntity;
 import com.airboot.common.model.enums.StatusEnum;
@@ -77,12 +78,23 @@ public class SysRole extends TenantEntity {
     @TableField(exist = false)
     private Long[] deptIds;
     
+    /**
+     * 是否为超级租户管理员角色
+     */
+    public boolean isTenantAdmin() {
+        return isTenantAdmin(this.getId());
+    }
+    
+    public static boolean isTenantAdmin(Long roleId) {
+        return Constants.TENANT_ADMIN_ROLE_ID.equals(roleId);
+    }
+    
     public boolean isAdmin() {
-        return isAdmin(this.getRoleKey());
+        return isTenantAdmin(this.getId()) || isAdmin(this.getRoleKey());
     }
     
     public static boolean isAdmin(String roleKey) {
-        return StringUtils.isNotBlank(roleKey) && "admin".equals(roleKey);
+        return StringUtils.isNotBlank(roleKey) && Constants.ADMIN_ROLE_KEY.equals(roleKey);
     }
     
 }

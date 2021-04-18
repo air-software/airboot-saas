@@ -66,7 +66,7 @@ const user = {
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
-          commit('SET_NAME', user.username)
+          commit('SET_NAME', user.personName)
           commit('SET_AVATAR', avatar)
           commit('SET_USER', data.user)
           commit('SET_TENANT', data.tenant)

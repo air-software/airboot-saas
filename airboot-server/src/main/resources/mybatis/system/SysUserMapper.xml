@@ -102,6 +102,18 @@
         <include refid="selectUser"/>
         where !u.deleted and (u.mobile = #{account} or u.username = #{account} or u.email = #{account})
     </select>
+    
+    <select id="findNormalById" parameterType="Long" resultMap="SysUserResult">
+        select *
+        from sys_user
+        where id = #{id} and status = 1 and !deleted
+    </select>
+    
+    <select id="findNormalByMobile" parameterType="String" resultMap="SysUserResult">
+        select *
+        from sys_user
+        where mobile = #{mobile} and status = 1 and !deleted
+    </select>
 
     <select id="findById" parameterType="Long" resultMap="SysUserResult">
         <include refid="selectUser"/>

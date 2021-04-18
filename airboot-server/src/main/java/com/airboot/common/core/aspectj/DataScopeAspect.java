@@ -45,8 +45,8 @@ public class DataScopeAspect {
         // 获取当前的用户
         SysUser currentUser = LoginUserContextHolder.getLoginUser().getUser();
         if (currentUser != null) {
-            // 数据权限过滤仅对非管理员用户有效，管理员始终能看到全部数据
-            if (!currentUser.isAdmin()) {
+            // 如果是超级租户管理员，则不过滤数据
+            if (!currentUser.isTenantAdmin()) {
                 dataScopeFilter(joinPoint, currentUser, controllerDataScope.deptAlias(),
                         controllerDataScope.userAlias());
             }
@@ -64,6 +64,7 @@ public class DataScopeAspect {
     public static void dataScopeFilter(JoinPoint joinPoint, SysUser user, String deptAlias, String userAlias) {
         StringBuilder sqlString = new StringBuilder();
         
+        // 多个角色采取并集的方式，因此拼接时先用OR，最后再把第一个OR替换为AND
         for (SysRole role : user.getRoles()) {
             DataScopeEnum dataScope = role.getDataScope();
             if (DataScopeEnum.全部数据权限.equals(dataScope)) {

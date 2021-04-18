@@ -38,7 +38,7 @@ public interface SysMenuMapper extends MyBaseMapper<SysMenu> {
     List<SysMenu> findListByUserId(SearchSysMenuVO search);
     
     /**
-     * 根据用户ID查询权限
+     * 根据用户ID查询权限（忽略多租户ID拼接）
      *
      * @param userId 用户ID
      * @return 权限列表

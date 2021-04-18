@@ -32,7 +32,6 @@
         <el-select v-model="queryParams.tenantType" placeholder="请选择租户类型" clearable size="small">
           <el-option value="管理平台" />
           <el-option value="普通商家" />
-          <el-option value="众包商家" />
         </el-select>
       </el-form-item>
       <el-form-item label="租户状态" prop="status">
@@ -142,7 +141,6 @@
         <el-form-item label="租户类型">
           <el-select v-model="form.tenantType" placeholder="请选择租户类型">
             <el-option value="普通商家" />
-            <el-option value="众包商家" />
           </el-select>
         </el-form-item>
         <el-form-item label="租户状态">

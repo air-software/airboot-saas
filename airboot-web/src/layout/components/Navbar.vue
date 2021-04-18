@@ -6,7 +6,7 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <el-select v-if="isTenantAdmin" v-model="tenantId" class="select-tenant" placeholder="请选择租户" filterable clearable @change="changeTenant">
+        <el-select v-if="$isTenantAdmin" v-model="tenantId" class="select-tenant" placeholder="请选择租户" filterable clearable @change="changeTenant">
           <el-option
             v-for="(item, index) in tenantList"
             :key="index"
@@ -36,6 +36,8 @@
         </el-tooltip>
 
       </template>
+
+      <span class="name">{{ user.personName }}</span>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -92,9 +94,6 @@ export default {
       'device',
       'user'
     ]),
-    isTenantAdmin() {
-      return this.user && this.user.id === 1
-    },
     setting: {
       get() {
         return this.$store.state.settings.showSettings
@@ -108,7 +107,7 @@ export default {
     }
   },
   mounted() {
-    if (this.isTenantAdmin) {
+    if (this.$isTenantAdmin) {
       this.getTenantList()
     }
   },
@@ -178,6 +177,12 @@ export default {
 
     .select-tenant {
       top: -16px;
+    }
+
+    .name {
+      font-size: 15px;
+      bottom: 15px;
+      position: relative;
     }
 
     &:focus {
