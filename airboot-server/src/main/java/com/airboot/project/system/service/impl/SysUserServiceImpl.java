@@ -5,6 +5,7 @@ import com.airboot.common.core.exception.CustomException;
 import com.airboot.common.core.utils.StringUtils;
 import com.airboot.common.core.utils.security.Md5Utils;
 import com.airboot.common.model.enums.StatusEnum;
+import com.airboot.common.security.LoginUser;
 import com.airboot.common.security.LoginUserContextHolder;
 import com.airboot.project.system.mapper.SysPostMapper;
 import com.airboot.project.system.mapper.SysRoleMapper;
@@ -405,6 +406,10 @@ public class SysUserServiceImpl implements ISysUserService {
         for (Long userId : userIds) {
             if (userId == null) {
                 throw new CustomException("未找到要操作的用户");
+            }
+            LoginUser loginUser = LoginUserContextHolder.getLoginUser();
+            if (loginUser.getUserId().equals(userId)) {
+                throw new CustomException("不允许自己删除自己");
             }
             SysUser existUser = this.getById(userId);
             if (existUser.isAdmin()) {

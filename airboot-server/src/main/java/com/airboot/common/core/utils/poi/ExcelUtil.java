@@ -133,11 +133,11 @@ public class ExcelUtil<T> {
             // 定义一个map用于存放excel列的序号和field.
             Map<String, Integer> cellMap = new HashMap<String, Integer>();
             // 获取表头
-            Row heard = sheet.getRow(0);
-            for (int i = 0; i < heard.getPhysicalNumberOfCells(); i++) {
-                Cell cell = heard.getCell(i);
+            Row head = sheet.getRow(0);
+            for (int i = 0; i < head.getPhysicalNumberOfCells(); i++) {
+                Cell cell = head.getCell(i);
                 if (StringUtils.isNotNull(cell)) {
-                    String value = this.getCellValue(heard, i).toString();
+                    String value = this.getCellValue(head, i).toString();
                     cellMap.put(value, i);
                 } else {
                     cellMap.put(null, i);

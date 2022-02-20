@@ -281,6 +281,13 @@
 }
 
 /** 解决当对话框高度超出一屏时，对话框底部会紧贴屏幕底部的问题 **/
-.air-dialog .el-dialog {
+.el-dialog {
   margin-bottom: 6vh;
+}
+
+/** 解决文本域字数较多时，统计字数会遮挡到输入文字的问题 **/
+.el-textarea .el-input__count {
+  background: transparent;
+  bottom: -35px;
+  right: 5px;
 }
