@@ -3,7 +3,7 @@ airboot:
   # 名称
   name: Airboot-SaaS
   # 版本
-  version: 1.0.4
+  version: 1.0.5
 
 # Spring配置
 spring:

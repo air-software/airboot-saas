@@ -1,5 +1,5 @@
 Spring Boot Version: ${spring-boot.version}
-Airboot-SaaS Version: 1.0.4
+Airboot-SaaS Version: 1.0.5
 ////////////////////////////////////////////////////////////////////
 //                          _ooOoo_                               //
 //                         o8888888o                              //
