@@ -36,7 +36,7 @@ public class SysJobController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysJobVO search) {
         IPage<SysJob> page = jobService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -57,7 +57,7 @@ public class SysJobController extends BaseController {
     @PreAuthorize("monitor:job:query")
     @GetMapping(value = "/{jobId}")
     public AjaxResult getInfo(@PathVariable("jobId") Long jobId) {
-        return AjaxResult.success(jobService.getById(jobId));
+        return success(jobService.getById(jobId));
     }
     
     /**
@@ -67,7 +67,8 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
-        return toAjax(jobService.saveOrUpdate(sysJob));
+        jobService.saveOrUpdate(sysJob);
+        return success();
     }
     
     /**
@@ -77,7 +78,8 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
-        return toAjax(jobService.saveOrUpdate(sysJob));
+        jobService.saveOrUpdate(sysJob);
+        return success();
     }
     
     /**
@@ -100,7 +102,7 @@ public class SysJobController extends BaseController {
     @PutMapping("/run")
     public AjaxResult run(@RequestBody SysJob job) throws SchedulerException {
         jobService.run(job);
-        return AjaxResult.success();
+        return success();
     }
     
     /**
@@ -111,6 +113,6 @@ public class SysJobController extends BaseController {
     @DeleteMapping("/{jobIds}")
     public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException {
         jobService.deleteByIds(jobIds);
-        return AjaxResult.success();
+        return success();
     }
 }

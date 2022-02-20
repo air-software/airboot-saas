@@ -32,7 +32,7 @@ public class SysLogininforController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysLogininforVO search) {
         IPage<SysLogininfor> page = logininforService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     @Log(title = "登录日志", operationType = OperationTypeEnum.导出)
@@ -56,6 +56,6 @@ public class SysLogininforController extends BaseController {
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         logininforService.cleanLogininfor();
-        return AjaxResult.success();
+        return success();
     }
 }

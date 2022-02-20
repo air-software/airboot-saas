@@ -44,7 +44,7 @@ public interface ISysTenantService {
      * @param sysTenant 租户管理
      * @return 结果
      */
-    boolean saveOrUpdate(SysTenant sysTenant);
+    void saveOrUpdate(SysTenant sysTenant);
 
     /**
      * 删除租户管理信息

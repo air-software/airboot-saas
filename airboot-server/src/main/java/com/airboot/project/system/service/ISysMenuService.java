@@ -110,7 +110,7 @@ public interface ISysMenuService {
      * @param menu 菜单信息
      * @return 结果
      */
-    boolean saveOrUpdate(SysMenu menu);
+    void saveOrUpdate(SysMenu menu);
     
     /**
      * 删除菜单管理信息

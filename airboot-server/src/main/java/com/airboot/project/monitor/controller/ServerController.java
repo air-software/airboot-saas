@@ -22,6 +22,6 @@ public class ServerController extends BaseController {
     public AjaxResult getInfo() throws Exception {
         Server server = new Server();
         server.copyTo();
-        return AjaxResult.success(server);
+        return success(server);
     }
 }

@@ -32,6 +32,28 @@ public class BaseController {
     }
     
     /**
+     * 返回成功结果
+     */
+    protected AjaxResult success() {
+        return AjaxResult.success();
+    }
+    
+    protected AjaxResult success(Object data) {
+        return AjaxResult.success(data);
+    }
+    
+    /**
+     * 返回失败结果
+     */
+    protected AjaxResult fail() {
+        return AjaxResult.error();
+    }
+    
+    protected AjaxResult fail(String msg) {
+        return AjaxResult.error(msg);
+    }
+    
+    /**
      * 响应返回结果
      *
      * @param rows 影响行数

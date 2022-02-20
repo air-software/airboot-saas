@@ -312,7 +312,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     @Transactional
-    public boolean update(SysUser user) {
+    public void update(SysUser user) {
         Long userId = user.getId();
         // 删除用户与角色关联
         userRoleMapper.deleteByUserId(userId);
@@ -322,7 +322,7 @@ public class SysUserServiceImpl implements ISysUserService {
         userPostMapper.deleteByUserId(userId);
         // 新增用户与岗位管理
         insertUserPost(user);
-        return userMapper.saveOrUpdate(user);
+        userMapper.saveOrUpdate(user);
     }
     
     /**
@@ -332,8 +332,8 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
-    public boolean updateUserProfile(SysUser user) {
-        return userMapper.saveOrUpdate(user);
+    public void updateUserProfile(SysUser user) {
+        userMapper.saveOrUpdate(user);
     }
     
     /**

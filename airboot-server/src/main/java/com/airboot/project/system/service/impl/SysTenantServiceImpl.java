@@ -64,8 +64,8 @@ public class SysTenantServiceImpl implements ISysTenantService {
      * @return 结果
      */
     @Override
-    public boolean saveOrUpdate(SysTenant sysTenant) {
-        return sysTenantMapper.saveOrUpdate(sysTenant);
+    public void saveOrUpdate(SysTenant sysTenant) {
+        sysTenantMapper.saveOrUpdate(sysTenant);
     }
 
     /**

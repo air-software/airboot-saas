@@ -32,7 +32,7 @@ public class SysOperlogController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysOperLogVO search) {
         IPage<SysOperLog> page = operLogService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     @Log(title = "操作日志", operationType = OperationTypeEnum.导出)
@@ -55,6 +55,6 @@ public class SysOperlogController extends BaseController {
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         operLogService.cleanOperLog();
-        return AjaxResult.success();
+        return success();
     }
 }

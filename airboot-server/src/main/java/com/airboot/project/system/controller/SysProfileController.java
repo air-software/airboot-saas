@@ -49,7 +49,7 @@ public class SysProfileController extends BaseController {
         dataMap.put("user", user);
         dataMap.put("roleGroup", userService.getUserRoleGroup(loginUser.getUserId()));
         dataMap.put("postGroup", userService.getUserPostGroup(loginUser.getUserId()));
-        return AjaxResult.success(dataMap);
+        return success(dataMap);
     }
     
     /**
@@ -58,17 +58,15 @@ public class SysProfileController extends BaseController {
     @Log(title = "个人信息", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult updateProfile(@Validated @RequestBody SysUser user) {
-        if (userService.updateUserProfile(user)) {
-            LoginUser loginUser = LoginUserContextHolder.getLoginUser();
-            // 更新缓存用户信息
-            loginUser.getUser().setPersonName(user.getPersonName());
-            loginUser.getUser().setMobile(user.getMobile());
-            loginUser.getUser().setEmail(user.getEmail());
-            loginUser.getUser().setGender(user.getGender());
-            tokenService.setLoginUser(loginUser);
-            return AjaxResult.success();
-        }
-        return AjaxResult.error("修改个人信息异常，请联系管理员");
+        userService.updateUserProfile(user);
+        LoginUser loginUser = LoginUserContextHolder.getLoginUser();
+        // 更新缓存用户信息
+        loginUser.getUser().setPersonName(user.getPersonName());
+        loginUser.getUser().setMobile(user.getMobile());
+        loginUser.getUser().setEmail(user.getEmail());
+        loginUser.getUser().setGender(user.getGender());
+        tokenService.setLoginUser(loginUser);
+        return success();
     }
     
     /**
@@ -84,16 +82,14 @@ public class SysProfileController extends BaseController {
         LoginUser loginUser = LoginUserContextHolder.getLoginUser();
         SysUser user = userService.getByIdWithPwd(loginUser.getUserId());
         if (!Md5Utils.verifyPassword(oldPassword, user.getPassword())) {
-            return AjaxResult.error("修改密码失败，旧密码错误");
+            return fail("修改密码失败，旧密码错误");
         }
-        
-        if (userService.updateUserProfile(SysUser.builder()
+    
+        userService.updateUserProfile(SysUser.builder()
             .id(user.getId())
             .password(Md5Utils.encryptPassword(newPassword))
-            .build())) {
-            return AjaxResult.success();
-        }
-        return AjaxResult.error("修改密码异常，请联系管理员");
+            .build());
+        return success();
     }
     
     /**
@@ -105,16 +101,15 @@ public class SysProfileController extends BaseController {
         if (!file.isEmpty()) {
             LoginUser loginUser = LoginUserContextHolder.getLoginUser();
             String avatar = FileUploadUtils.upload(ProjectConfig.getAvatarPath(), file);
-            if (userService.updateUserProfile(SysUser.builder()
+            userService.updateUserProfile(SysUser.builder()
                 .id(loginUser.getUserId())
                 .avatar(avatar)
-                .build())) {
-                // 更新缓存用户头像
-                loginUser.getUser().setAvatar(avatar);
-                tokenService.setLoginUser(loginUser);
-                return AjaxResult.success(avatar);
-            }
+                .build());
+            // 更新缓存用户头像
+            loginUser.getUser().setAvatar(avatar);
+            tokenService.setLoginUser(loginUser);
+            return success(avatar);
         }
-        return AjaxResult.error("上传图片异常，请联系管理员");
+        return fail("上传图片异常，请联系管理员");
     }
 }

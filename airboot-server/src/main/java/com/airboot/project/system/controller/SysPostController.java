@@ -36,7 +36,7 @@ public class SysPostController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysPostVO search) {
         IPage<SysPost> page = postService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     @Log(title = "岗位管理", operationType = OperationTypeEnum.导出)
@@ -54,7 +54,7 @@ public class SysPostController extends BaseController {
     @PreAuthorize("system:post:query")
     @GetMapping(value = "/{postId}")
     public AjaxResult getInfo(@PathVariable Long postId) {
-        return AjaxResult.success(postService.getById(postId));
+        return success(postService.getById(postId));
     }
     
     /**
@@ -65,11 +65,12 @@ public class SysPostController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysPost post) {
         if (!postService.checkPostNameUnique(post)) {
-            return AjaxResult.error("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
+            return fail("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
         } else if (!postService.checkPostCodeUnique(post)) {
-            return AjaxResult.error("新增岗位'" + post.getPostName() + "'失败，岗位编码已存在");
+            return fail("新增岗位'" + post.getPostName() + "'失败，岗位编码已存在");
         }
-        return toAjax(postService.saveOrUpdate(post));
+        postService.saveOrUpdate(post);
+        return success();
     }
     
     /**
@@ -80,11 +81,12 @@ public class SysPostController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysPost post) {
         if (!postService.checkPostNameUnique(post)) {
-            return AjaxResult.error("修改岗位'" + post.getPostName() + "'失败，岗位名称已存在");
+            return fail("修改岗位'" + post.getPostName() + "'失败，岗位名称已存在");
         } else if (!postService.checkPostCodeUnique(post)) {
-            return AjaxResult.error("修改岗位'" + post.getPostName() + "'失败，岗位编码已存在");
+            return fail("修改岗位'" + post.getPostName() + "'失败，岗位编码已存在");
         }
-        return toAjax(postService.saveOrUpdate(post));
+        postService.saveOrUpdate(post);
+        return success();
     }
     
     /**
@@ -103,6 +105,6 @@ public class SysPostController extends BaseController {
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
         List<SysPost> posts = postService.getAll();
-        return AjaxResult.success(posts);
+        return success(posts);
     }
 }

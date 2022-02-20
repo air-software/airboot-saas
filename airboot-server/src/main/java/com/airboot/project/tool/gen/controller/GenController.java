@@ -47,7 +47,7 @@ public class GenController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchGenTableVO search) {
         IPage<GenTable> page = genTableService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -61,7 +61,7 @@ public class GenController extends BaseController {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("info", table);
         dataMap.put("columns", list);
-        return AjaxResult.success(dataMap);
+        return success(dataMap);
     }
     
     /**
@@ -71,7 +71,7 @@ public class GenController extends BaseController {
     @GetMapping("/db/page")
     public AjaxResult dataList(SearchGenTableVO search) {
         IPage<GenTable> page = genTableService.getDbTablePage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -85,7 +85,7 @@ public class GenController extends BaseController {
         // 查询表信息
         List<GenTable> tableList = genTableService.getDbTableListByNames(tableNames);
         genTableService.importGenTable(tableList);
-        return AjaxResult.success();
+        return success();
     }
     
     /**
@@ -97,7 +97,7 @@ public class GenController extends BaseController {
     public AjaxResult editSave(@Validated @RequestBody GenTable genTable) {
         genTableService.validateEdit(genTable);
         genTableService.update(genTable);
-        return AjaxResult.success();
+        return success();
     }
     
     /**
@@ -108,7 +108,7 @@ public class GenController extends BaseController {
     @DeleteMapping("/{tableIds}")
     public AjaxResult remove(@PathVariable Long[] tableIds) {
         genTableService.deleteByIds(Arrays.asList(tableIds));
-        return AjaxResult.success();
+        return success();
     }
     
     /**
@@ -118,7 +118,7 @@ public class GenController extends BaseController {
     @GetMapping("/preview/{tableId}")
     public AjaxResult preview(@PathVariable("tableId") Long tableId) throws IOException {
         Map<String, String> dataMap = genTableService.previewCode(tableId);
-        return AjaxResult.success(dataMap);
+        return success(dataMap);
     }
     
     /**

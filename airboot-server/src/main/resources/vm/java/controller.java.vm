@@ -49,7 +49,7 @@ public class ${ClassName}Controller extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(Search${ClassName}VO search) {
         IPage<${ClassName}> page = ${className}Service.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
 
 #end
@@ -60,7 +60,7 @@ public class ${ClassName}Controller extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(Search${ClassName}VO search) {
         List<${ClassName}> list = ${className}Service.getList(search);
-        return AjaxResult.success(list);
+        return success(list);
     }
 
     /**
@@ -81,7 +81,7 @@ public class ${ClassName}Controller extends BaseController {
     @PreAuthorize("${permissionPrefix}:query")
     @GetMapping(value = "/{${pkColumn.javaField}}")
     public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
-        return AjaxResult.success(${className}Service.getById(${pkColumn.javaField}));
+        return success(${className}Service.getById(${pkColumn.javaField}));
     }
 
     /**
@@ -95,7 +95,8 @@ public class ${ClassName}Controller extends BaseController {
 #else
     public AjaxResult add(@RequestBody ${ClassName} ${className}) {
 #end
-        return toAjax(${className}Service.saveOrUpdate(${className}));
+        ${className}Service.saveOrUpdate(${className});
+        return success();
     }
 
     /**
@@ -109,7 +110,8 @@ public class ${ClassName}Controller extends BaseController {
 #else
     public AjaxResult edit(@RequestBody ${ClassName} ${className}) {
 #end
-        return toAjax(${className}Service.saveOrUpdate(${className}));
+        ${className}Service.saveOrUpdate(${className});
+        return success();
     }
 
     /**

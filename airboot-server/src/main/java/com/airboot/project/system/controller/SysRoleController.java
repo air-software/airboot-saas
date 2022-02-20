@@ -42,7 +42,7 @@ public class SysRoleController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysRoleVO search) {
         IPage<SysRole> page = roleService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     @Log(title = "角色管理", operationType = OperationTypeEnum.导出)
@@ -60,7 +60,7 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("system:role:query")
     @GetMapping(value = "/{roleId}")
     public AjaxResult getInfo(@PathVariable Long roleId) {
-        return AjaxResult.success(roleService.getById(roleId));
+        return success(roleService.getById(roleId));
     }
     
     /**
@@ -71,9 +71,9 @@ public class SysRoleController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysRole role) {
         if (!roleService.checkRoleNameUnique(role)) {
-            return AjaxResult.error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
+            return fail("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
         } else if (!roleService.checkRoleKeyUnique(role)) {
-            return AjaxResult.error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
+            return fail("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
         return toAjax(roleService.save(role));
         
@@ -88,9 +88,9 @@ public class SysRoleController extends BaseController {
     public AjaxResult edit(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
         if (!roleService.checkRoleNameUnique(role)) {
-            return AjaxResult.error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
+            return fail("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
         } else if (!roleService.checkRoleKeyUnique(role)) {
-            return AjaxResult.error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
+            return fail("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
         
         int result = roleService.update(role);
@@ -129,10 +129,11 @@ public class SysRoleController extends BaseController {
     public AjaxResult changeStatus(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
         // 新建一个role实例来更新，防止更新到其他字段
-        return toAjax(roleService.updateStatus(SysRole.builder()
+        roleService.updateStatus(SysRole.builder()
             .id(role.getId())
             .status(role.getStatus())
-            .build()));
+            .build());
+        return success();
     }
     
     /**
@@ -151,6 +152,6 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("system:role:query")
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
-        return AjaxResult.success(roleService.getAll());
+        return success(roleService.getAll());
     }
 }

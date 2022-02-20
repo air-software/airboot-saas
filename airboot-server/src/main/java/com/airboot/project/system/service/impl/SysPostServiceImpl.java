@@ -165,8 +165,8 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 结果
      */
     @Override
-    public boolean saveOrUpdate(SysPost post) {
-        return postMapper.saveOrUpdate(post);
+    public void saveOrUpdate(SysPost post) {
+        postMapper.saveOrUpdate(post);
     }
     
 }

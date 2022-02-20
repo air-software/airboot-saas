@@ -68,8 +68,8 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @return 结果
      */
     @Override
-    public boolean saveOrUpdate(${ClassName} ${className}) {
-        return ${className}Mapper.saveOrUpdate(${className});
+    public void saveOrUpdate(${ClassName} ${className}) {
+        ${className}Mapper.saveOrUpdate(${className});
     }
 
     /**

@@ -99,6 +99,6 @@ public interface ISysPostService {
      * @param post 岗位信息
      * @return 结果
      */
-    boolean saveOrUpdate(SysPost post);
+    void saveOrUpdate(SysPost post);
     
 }

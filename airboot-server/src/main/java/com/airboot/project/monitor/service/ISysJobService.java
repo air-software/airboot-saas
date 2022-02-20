@@ -92,7 +92,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    boolean saveOrUpdate(SysJob job) throws SchedulerException, TaskException;
+    void saveOrUpdate(SysJob job) throws SchedulerException, TaskException;
     
     /**
      * 校验cron表达式是否有效

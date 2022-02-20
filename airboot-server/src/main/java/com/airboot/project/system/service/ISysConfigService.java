@@ -59,7 +59,7 @@ public interface ISysConfigService {
      * @param config 参数配置信息
      * @return 结果
      */
-    boolean saveOrUpdate(SysConfig config);
+    void saveOrUpdate(SysConfig config);
     
     /**
      * 删除参数配置信息

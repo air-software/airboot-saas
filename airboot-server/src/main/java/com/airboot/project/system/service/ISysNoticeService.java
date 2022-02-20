@@ -35,7 +35,7 @@ public interface ISysNoticeService {
      * @param notice 公告信息
      * @return 结果
      */
-    boolean saveOrUpdate(SysNotice notice);
+    void saveOrUpdate(SysNotice notice);
     
     /**
      * 删除公告信息

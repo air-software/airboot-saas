@@ -32,7 +32,7 @@ public class TestController extends BaseController {
     @GetMapping("/list")
     public AjaxResult userList() {
         List<UserEntity> userList = new ArrayList<>(users.values());
-        return AjaxResult.success(userList);
+        return success(userList);
     }
     
     @ApiOperation("获取用户详细")
@@ -40,9 +40,9 @@ public class TestController extends BaseController {
     @GetMapping("/{userId}")
     public AjaxResult getUser(@PathVariable Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
-            return AjaxResult.success(users.get(userId));
+            return success(users.get(userId));
         } else {
-            return AjaxResult.error("用户不存在");
+            return fail("用户不存在");
         }
     }
     
@@ -51,9 +51,9 @@ public class TestController extends BaseController {
     @PostMapping("/save")
     public AjaxResult save(UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-            return AjaxResult.error("用户ID不能为空");
+            return fail("用户ID不能为空");
         }
-        return AjaxResult.success(users.put(user.getUserId(), user));
+        return success(users.put(user.getUserId(), user));
     }
     
     @ApiOperation("更新用户")
@@ -61,13 +61,13 @@ public class TestController extends BaseController {
     @PutMapping("/update")
     public AjaxResult update(UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-            return AjaxResult.error("用户ID不能为空");
+            return fail("用户ID不能为空");
         }
         if (users.isEmpty() || !users.containsKey(user.getUserId())) {
-            return AjaxResult.error("用户不存在");
+            return fail("用户不存在");
         }
         users.remove(user.getUserId());
-        return AjaxResult.success(users.put(user.getUserId(), user));
+        return success(users.put(user.getUserId(), user));
     }
     
     @ApiOperation("删除用户信息")
@@ -76,9 +76,9 @@ public class TestController extends BaseController {
     public AjaxResult delete(@PathVariable Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
             users.remove(userId);
-            return AjaxResult.success();
+            return success();
         } else {
-            return AjaxResult.error("用户不存在");
+            return fail("用户不存在");
         }
     }
 }

@@ -38,7 +38,7 @@ public class SysDeptController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(SearchSysDeptVO search) {
         List<SysDept> depts = deptService.getList(search);
-        return AjaxResult.success(depts);
+        return success(depts);
     }
     
     /**
@@ -50,7 +50,7 @@ public class SysDeptController extends BaseController {
         List<SysDept> depts = deptService.getList(new SearchSysDeptVO());
         depts.removeIf(d -> d.getId().equals(deptId)
             || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
-        return AjaxResult.success(depts);
+        return success(depts);
     }
     
     /**
@@ -59,7 +59,7 @@ public class SysDeptController extends BaseController {
     @PreAuthorize("system:dept:query")
     @GetMapping(value = "/{deptId}")
     public AjaxResult getInfo(@PathVariable Long deptId) {
-        return AjaxResult.success(deptService.getById(deptId));
+        return success(deptService.getById(deptId));
     }
     
     /**
@@ -68,7 +68,7 @@ public class SysDeptController extends BaseController {
     @GetMapping("/treeselect")
     public AjaxResult treeselect(SearchSysDeptVO search) {
         List<SysDept> depts = deptService.getList(search);
-        return AjaxResult.success(deptService.buildTreeSelect(depts));
+        return success(deptService.buildTreeSelect(depts));
     }
     
     /**
@@ -80,7 +80,7 @@ public class SysDeptController extends BaseController {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("checkedKeys", deptService.getListByRoleId(roleId));
         dataMap.put("depts", deptService.buildTreeSelect(depts));
-        return AjaxResult.success(dataMap);
+        return success(dataMap);
     }
     
     /**
@@ -91,7 +91,7 @@ public class SysDeptController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDept dept) {
         if (!deptService.checkDeptNameUnique(dept)) {
-            return AjaxResult.error("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+            return fail("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
         return toAjax(deptService.save(dept));
     }
@@ -104,12 +104,12 @@ public class SysDeptController extends BaseController {
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDept dept) {
         if (!deptService.checkDeptNameUnique(dept)) {
-            return AjaxResult.error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+            return fail("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(dept.getId())) {
-            return AjaxResult.error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
+            return fail("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
         } else if (StatusEnum.停用.equals(dept.getStatus())
                 && deptService.getNormalChildrenDeptById(dept.getId()) > 0) {
-            return AjaxResult.error("该部门包含未停用的子部门！");
+            return fail("该部门包含未停用的子部门！");
         }
         return toAjax(deptService.update(dept));
     }
@@ -122,10 +122,10 @@ public class SysDeptController extends BaseController {
     @DeleteMapping("/{deptId}")
     public AjaxResult remove(@PathVariable Long deptId) {
         if (deptService.hasChildByDeptId(deptId)) {
-            return AjaxResult.error("存在下级部门,不允许删除");
+            return fail("存在下级部门,不允许删除");
         }
         if (deptService.checkDeptExistUser(deptId)) {
-            return AjaxResult.error("部门存在用户,不允许删除");
+            return fail("部门存在用户,不允许删除");
         }
         return toAjax(deptService.deleteById(deptId));
     }

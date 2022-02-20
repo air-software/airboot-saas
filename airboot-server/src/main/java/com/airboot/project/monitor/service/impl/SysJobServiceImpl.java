@@ -190,20 +190,17 @@ public class SysJobServiceImpl implements ISysJobService {
      */
     @Override
     @Transactional
-    public boolean saveOrUpdate(SysJob job) throws SchedulerException, TaskException {
+    public void saveOrUpdate(SysJob job) throws SchedulerException, TaskException {
         if (job.getId() == null) {
             // 如果是新增，则默认暂停
             job.setStatus(JobStatusEnum.暂停);
         }
-        boolean success = jobMapper.saveOrUpdate(job);
-        if (success) {
-            if (job.getId() == null) {
-                ScheduleUtils.createScheduleJob(scheduler, job);
-            } else {
-                updateSchedulerJob(job, job.getJobGroup());
-            }
+        jobMapper.saveOrUpdate(job);
+        if (job.getId() == null) {
+            ScheduleUtils.createScheduleJob(scheduler, job);
+        } else {
+            updateSchedulerJob(job, job.getJobGroup());
         }
-        return success;
     }
     
     /**

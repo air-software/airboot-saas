@@ -223,8 +223,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 结果
      */
     @Override
-    public boolean saveOrUpdate(SysMenu menu) {
-        return menuMapper.saveOrUpdate(menu);
+    public void saveOrUpdate(SysMenu menu) {
+        menuMapper.saveOrUpdate(menu);
     }
     
     /**

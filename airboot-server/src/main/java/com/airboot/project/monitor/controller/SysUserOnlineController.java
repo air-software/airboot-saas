@@ -68,7 +68,7 @@ public class SysUserOnlineController extends BaseController {
         IPage<SysUserOnline> page = new Page<>();
         page.setRecords(userOnlineList);
         page.setTotal(userOnlineList.size());
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -79,6 +79,6 @@ public class SysUserOnlineController extends BaseController {
     @DeleteMapping("/{userKey}/{uuid}")
     public AjaxResult forceLogout(@PathVariable String userKey, @PathVariable String uuid) {
         tokenService.delLoginUser(userKey, uuid);
-        return AjaxResult.success();
+        return success();
     }
 }

@@ -88,8 +88,8 @@ public class SysConfigServiceImpl implements ISysConfigService {
      * @return 结果
      */
     @Override
-    public boolean saveOrUpdate(SysConfig config) {
-        return configMapper.saveOrUpdate(config);
+    public void saveOrUpdate(SysConfig config) {
+        configMapper.saveOrUpdate(config);
     }
     
     /**

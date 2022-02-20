@@ -58,7 +58,7 @@ public class SysUserController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysUserVO search) {
         IPage<SysUser> page = userService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -68,7 +68,7 @@ public class SysUserController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(SearchSysUserVO search) {
         List<SysUser> list = userService.getList(search);
-        return AjaxResult.success(list);
+        return success(list);
     }
     
     @Log(title = "用户管理", operationType = OperationTypeEnum.导出)
@@ -87,7 +87,7 @@ public class SysUserController extends BaseController {
         ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
         List<SysUser> userList = util.importExcel(file.getInputStream());
         String message = userService.importUser(userList, updateSupport);
-        return AjaxResult.success(message);
+        return success(message);
     }
     
     @GetMapping("/importTemplate")
@@ -126,7 +126,7 @@ public class SysUserController extends BaseController {
             // 如果不是管理员，则在已选ID中去掉管理员角色ID
             dataMap.put("roleIds", isAdmin ? roleIds : roleIds.stream().filter(roleId -> !roleId.equals(adminRoleId[0])).collect(Collectors.toList()));
         }
-        return AjaxResult.success(dataMap);
+        return success(dataMap);
     }
     
     /**
@@ -157,14 +157,14 @@ public class SysUserController extends BaseController {
 
         // 防止前端恶意更新密码
         user.setPassword(null);
-        boolean updateResult = userService.update(user);
+        userService.update(user);
         
-        // 如果是停用用户，则直接强退该用户
-        if (updateResult && StatusEnum.停用.equals(user.getStatus())) {
+        // 如果本次操作是停用用户，则直接强退该用户
+        if (StatusEnum.停用.equals(user.getStatus())) {
             userOnlineService.forceLogoutByUserId(user.getId());
         }
         
-        return toAjax(updateResult);
+        return success();
     }
     
     /**
@@ -200,10 +200,12 @@ public class SysUserController extends BaseController {
         
         user.setPassword(Md5Utils.encryptPassword(user.getPassword()));
         // 新建一个user实例来更新，防止更新到其他字段
-        return toAjax(userService.updateUserProfile(SysUser.builder()
+        userService.updateUserProfile(SysUser.builder()
             .id(user.getId())
             .password(user.getPassword())
-            .build()));
+            .build());
+        
+        return success();
     }
     
     /**
@@ -219,13 +221,13 @@ public class SysUserController extends BaseController {
             .id(user.getId())
             .status(user.getStatus())
             .build();
-        boolean updateResult = userService.updateUserProfile(updateUser);
+        userService.updateUserProfile(updateUser);
         
-        // 如果是停用用户，则直接强退该用户
-        if (updateResult && StatusEnum.停用.equals(user.getStatus())) {
+        // 如果本次操作是停用用户，则直接强退该用户
+        if (StatusEnum.停用.equals(user.getStatus())) {
             userOnlineService.forceLogoutByUserId(user.getId());
         }
         
-        return toAjax(updateResult);
+        return success();
     }
 }

@@ -38,7 +38,7 @@ public class SysTenantController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysTenantVO search) {
         IPage<SysTenant> page = sysTenantService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
 
     /**
@@ -48,7 +48,7 @@ public class SysTenantController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(SearchSysTenantVO search) {
         List<SysTenant> list = sysTenantService.getList(search);
-        return AjaxResult.success(list);
+        return success(list);
     }
 
     /**
@@ -69,7 +69,7 @@ public class SysTenantController extends BaseController {
     @PreAuthorize("system:tenant:query")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
-        return AjaxResult.success(sysTenantService.getById(id));
+        return success(sysTenantService.getById(id));
     }
 
     /**
@@ -79,7 +79,8 @@ public class SysTenantController extends BaseController {
     @Log(title = "租户管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@RequestBody SysTenant sysTenant) {
-        return toAjax(sysTenantService.saveOrUpdate(sysTenant));
+        sysTenantService.saveOrUpdate(sysTenant);
+        return success();
     }
 
     /**
@@ -89,7 +90,8 @@ public class SysTenantController extends BaseController {
     @Log(title = "租户管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@RequestBody SysTenant sysTenant) {
-        return toAjax(sysTenantService.saveOrUpdate(sysTenant));
+        sysTenantService.saveOrUpdate(sysTenant);
+        return success();
     }
 
     /**

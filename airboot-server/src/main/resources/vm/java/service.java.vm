@@ -48,7 +48,7 @@ public interface I${ClassName}Service {
      * @param ${className} ${functionName}
      * @return 结果
      */
-    boolean saveOrUpdate(${ClassName} ${className});
+    void saveOrUpdate(${ClassName} ${className});
 
     /**
      * 删除${functionName}信息

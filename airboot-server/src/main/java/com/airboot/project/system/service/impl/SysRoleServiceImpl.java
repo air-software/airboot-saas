@@ -226,8 +226,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public boolean updateStatus(SysRole role) {
-        return roleMapper.saveOrUpdate(role);
+    public void updateStatus(SysRole role) {
+        roleMapper.saveOrUpdate(role);
     }
     
     /**

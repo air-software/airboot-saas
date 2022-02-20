@@ -50,8 +50,8 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
      * @return 结果
      */
     @Override
-    public boolean saveOrUpdate(SysNotice notice) {
-        return noticeMapper.saveOrUpdate(notice);
+    public void saveOrUpdate(SysNotice notice) {
+        noticeMapper.saveOrUpdate(notice);
     }
     
     /**

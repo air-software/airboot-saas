@@ -35,7 +35,7 @@ public class SysJobLogController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysJobLogVO search) {
         IPage<SysJobLog> page = jobLogService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -56,7 +56,7 @@ public class SysJobLogController extends BaseController {
     @PreAuthorize("monitor:job:query")
     @GetMapping(value = "/{jobLogId}")
     public AjaxResult getInfo(@PathVariable Long jobLogId) {
-        return AjaxResult.success(jobLogService.getById(jobLogId));
+        return success(jobLogService.getById(jobLogId));
     }
     
     
@@ -78,6 +78,6 @@ public class SysJobLogController extends BaseController {
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         jobLogService.cleanJobLog();
-        return AjaxResult.success();
+        return success();
     }
 }

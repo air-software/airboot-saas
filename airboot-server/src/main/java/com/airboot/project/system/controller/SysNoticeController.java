@@ -34,7 +34,7 @@ public class SysNoticeController extends BaseController {
     @GetMapping("/page")
     public AjaxResult page(SearchSysNoticeVO search) {
         IPage<SysNotice> page = noticeService.getPage(search);
-        return AjaxResult.success(page);
+        return success(page);
     }
     
     /**
@@ -43,7 +43,7 @@ public class SysNoticeController extends BaseController {
     @PreAuthorize("system:notice:query")
     @GetMapping(value = "/{noticeId}")
     public AjaxResult getInfo(@PathVariable Long noticeId) {
-        return AjaxResult.success(noticeService.getById(noticeId));
+        return success(noticeService.getById(noticeId));
     }
     
     /**
@@ -53,7 +53,8 @@ public class SysNoticeController extends BaseController {
     @Log(title = "通知公告", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysNotice notice) {
-        return toAjax(noticeService.saveOrUpdate(notice));
+        noticeService.saveOrUpdate(notice);
+        return success();
     }
     
     /**
@@ -63,7 +64,8 @@ public class SysNoticeController extends BaseController {
     @Log(title = "通知公告", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysNotice notice) {
-        return toAjax(noticeService.saveOrUpdate(notice));
+        noticeService.saveOrUpdate(notice);
+        return success();
     }
     
     /**

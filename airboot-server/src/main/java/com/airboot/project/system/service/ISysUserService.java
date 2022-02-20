@@ -137,7 +137,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    boolean update(SysUser user);
+    void update(SysUser user);
     
     /**
      * 修改用户基本信息
@@ -145,7 +145,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    boolean updateUserProfile(SysUser user);
+    void updateUserProfile(SysUser user);
     
     /**
      * 通过用户ID删除用户
