@@ -5,7 +5,7 @@ import com.airboot.common.core.aspectj.lang.annotation.Log;
 import com.airboot.common.core.utils.poi.ExcelUtil;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysConfig;
 import com.airboot.project.system.model.vo.SearchSysConfigVO;
 import com.airboot.project.system.service.ISysConfigService;
@@ -39,7 +39,7 @@ public class SysConfigController extends BaseController {
         return AjaxResult.success(page);
     }
     
-    @Log(title = "参数管理", businessType = BusinessTypeEnum.导出)
+    @Log(title = "参数管理", operationType = OperationTypeEnum.导出)
     @PreAuthorize("system:config:export")
     @GetMapping("/export")
     public AjaxResult export(SearchSysConfigVO search) {
@@ -77,7 +77,7 @@ public class SysConfigController extends BaseController {
      * 新增参数配置
      */
     @PreAuthorize("system:config:add")
-    @Log(title = "参数管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "参数管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysConfig config) {
         if (!configService.checkConfigKeyUnique(config)) {
@@ -90,7 +90,7 @@ public class SysConfigController extends BaseController {
      * 修改参数配置
      */
     @PreAuthorize("system:config:edit")
-    @Log(title = "参数管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "参数管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysConfig config) {
         if (!configService.checkConfigKeyUnique(config)) {
@@ -103,7 +103,7 @@ public class SysConfigController extends BaseController {
      * 删除参数配置
      */
     @PreAuthorize("system:config:remove")
-    @Log(title = "参数管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "参数管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{configIds}")
     public AjaxResult remove(@PathVariable Long[] configIds) {
         return toAjax(configService.deleteByIds(Arrays.asList(configIds)));

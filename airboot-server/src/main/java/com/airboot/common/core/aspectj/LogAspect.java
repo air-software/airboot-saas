@@ -142,7 +142,7 @@ public class LogAspect {
      */
     public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog) throws Exception {
         // 设置action动作
-        operLog.setBusinessType(log.businessType());
+        operLog.setOperationType(log.operationType());
         // 设置标题
         operLog.setTitle(log.title());
         // 是否需要保存request，参数和值

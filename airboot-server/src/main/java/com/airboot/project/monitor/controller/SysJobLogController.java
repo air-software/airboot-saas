@@ -5,7 +5,7 @@ import com.airboot.common.core.aspectj.lang.annotation.Log;
 import com.airboot.common.core.utils.poi.ExcelUtil;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.project.monitor.model.entity.SysJobLog;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.monitor.model.vo.SearchSysJobLogVO;
 import com.airboot.project.monitor.service.ISysJobLogService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -42,7 +42,7 @@ public class SysJobLogController extends BaseController {
      * 导出定时任务调度日志列表
      */
     @PreAuthorize("monitor:job:export")
-    @Log(title = "定时任务调度日志", businessType = BusinessTypeEnum.导出)
+    @Log(title = "定时任务调度日志", operationType = OperationTypeEnum.导出)
     @GetMapping("/export")
     public AjaxResult export(SearchSysJobLogVO search) {
         List<SysJobLog> list = jobLogService.getList(search);
@@ -64,7 +64,7 @@ public class SysJobLogController extends BaseController {
      * 删除定时任务调度日志
      */
     @PreAuthorize("monitor:job:remove")
-    @Log(title = "定时任务调度日志", businessType = BusinessTypeEnum.删除)
+    @Log(title = "定时任务调度日志", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{jobLogIds}")
     public AjaxResult remove(@PathVariable Long[] jobLogIds) {
         return toAjax(jobLogService.deleteByIds(Arrays.asList(jobLogIds)));
@@ -74,7 +74,7 @@ public class SysJobLogController extends BaseController {
      * 清空定时任务调度日志
      */
     @PreAuthorize("monitor:job:remove")
-    @Log(title = "定时任务调度日志", businessType = BusinessTypeEnum.清空数据)
+    @Log(title = "定时任务调度日志", operationType = OperationTypeEnum.清空数据)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         jobLogService.cleanJobLog();

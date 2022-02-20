@@ -8,7 +8,7 @@ import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.LoginUser;
 import com.airboot.common.security.LoginUserContextHolder;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysMenu;
 import com.airboot.project.system.model.vo.SearchSysMenuVO;
 import com.airboot.project.system.service.ISysMenuService;
@@ -81,7 +81,7 @@ public class SysMenuController extends BaseController {
      * 新增菜单
      */
     @PreAuthorize("system:menu:add")
-    @Log(title = "菜单管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "菜单管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysMenu menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
@@ -97,7 +97,7 @@ public class SysMenuController extends BaseController {
      * 修改菜单
      */
     @PreAuthorize("system:menu:edit")
-    @Log(title = "菜单管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "菜单管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysMenu menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
@@ -115,7 +115,7 @@ public class SysMenuController extends BaseController {
      * 删除菜单
      */
     @PreAuthorize("system:menu:remove")
-    @Log(title = "菜单管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "菜单管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{menuId}")
     public AjaxResult remove(@PathVariable("menuId") Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {

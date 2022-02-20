@@ -6,7 +6,7 @@ import com.airboot.common.core.utils.StringUtils;
 import com.airboot.common.model.enums.StatusEnum;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysDept;
 import com.airboot.project.system.model.vo.SearchSysDeptVO;
 import com.airboot.project.system.service.ISysDeptService;
@@ -87,7 +87,7 @@ public class SysDeptController extends BaseController {
      * 新增部门
      */
     @PreAuthorize("system:dept:add")
-    @Log(title = "部门管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "部门管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDept dept) {
         if (!deptService.checkDeptNameUnique(dept)) {
@@ -100,7 +100,7 @@ public class SysDeptController extends BaseController {
      * 修改部门
      */
     @PreAuthorize("system:dept:edit")
-    @Log(title = "部门管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "部门管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDept dept) {
         if (!deptService.checkDeptNameUnique(dept)) {
@@ -118,7 +118,7 @@ public class SysDeptController extends BaseController {
      * 删除部门
      */
     @PreAuthorize("system:dept:remove")
-    @Log(title = "部门管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "部门管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{deptId}")
     public AjaxResult remove(@PathVariable Long deptId) {
         if (deptService.hasChildByDeptId(deptId)) {

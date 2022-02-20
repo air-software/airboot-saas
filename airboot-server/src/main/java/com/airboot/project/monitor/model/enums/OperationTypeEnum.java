@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 业务类型枚举
+ * 操作类型枚举
  *
  * @author airoland
  */
 @Getter
 @AllArgsConstructor
-public enum BusinessTypeEnum {
+public enum OperationTypeEnum {
     新增(1),
     修改(2),
     删除(3),

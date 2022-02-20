@@ -11,7 +11,7 @@ import com.airboot.common.model.enums.StatusEnum;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.LoginUserContextHolder;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.monitor.service.ISysUserOnlineService;
 import com.airboot.project.system.model.entity.SysRole;
 import com.airboot.project.system.model.entity.SysUser;
@@ -71,7 +71,7 @@ public class SysUserController extends BaseController {
         return AjaxResult.success(list);
     }
     
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.导出)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.导出)
     @PreAuthorize("system:user:export")
     @GetMapping("/export")
     public AjaxResult export(SearchSysUserVO search) {
@@ -80,7 +80,7 @@ public class SysUserController extends BaseController {
         return util.exportExcel(list, "用户数据");
     }
     
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.导入)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.导入)
     @PreAuthorize("system:user:import")
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
@@ -133,7 +133,7 @@ public class SysUserController extends BaseController {
      * 新增用户
      */
     @PreAuthorize("system:user:add")
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysUser user) {
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 50) {
@@ -149,7 +149,7 @@ public class SysUserController extends BaseController {
      * 修改用户
      */
     @PreAuthorize("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysUser user) {
         userService.checkUserAllowed(user);
@@ -171,7 +171,7 @@ public class SysUserController extends BaseController {
      * 删除用户
      */
     @PreAuthorize("system:user:remove")
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{userIds}")
     public AjaxResult remove(@PathVariable Long[] userIds) {
         int deleteResult = userService.deleteByIds(userIds);
@@ -190,7 +190,7 @@ public class SysUserController extends BaseController {
      * 重置密码
      */
     @PreAuthorize("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.修改)
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody SysUser user) {
         userService.checkUserAllowed(user);
@@ -210,7 +210,7 @@ public class SysUserController extends BaseController {
      * 状态修改
      */
     @PreAuthorize("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "用户管理", operationType = OperationTypeEnum.修改)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysUser user) {
         userService.checkUserAllowed(user);

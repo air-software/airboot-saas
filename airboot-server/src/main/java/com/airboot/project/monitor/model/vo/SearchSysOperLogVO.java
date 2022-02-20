@@ -1,7 +1,7 @@
 package com.airboot.project.monitor.model.vo;
 
 import com.airboot.common.model.vo.BaseSearchVO;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import lombok.Data;
 
 /**
@@ -20,9 +20,9 @@ public class SearchSysOperLogVO extends BaseSearchVO {
     private String title;
     
     /**
-     * 业务类型
+     * 操作类型
      */
-    private BusinessTypeEnum businessType;
+    private OperationTypeEnum operationType;
     
     /**
      * 操作人员账号

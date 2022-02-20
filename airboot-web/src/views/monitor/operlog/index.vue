@@ -21,9 +21,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="类型" prop="businessType">
+      <el-form-item label="类型" prop="operationType">
         <el-select
-          v-model="queryParams.businessType"
+          v-model="queryParams.operationType"
           placeholder="操作类型"
           clearable
           size="small"
@@ -101,7 +101,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="日志编号" align="center" prop="id" />
       <el-table-column label="系统模块" align="center" prop="title" width="220" />
-      <el-table-column label="操作类型" align="center" prop="businessType" />
+      <el-table-column label="操作类型" align="center" prop="operationType" />
       <el-table-column label="请求方式" align="center" prop="requestMethod" />
       <el-table-column label="操作人员ID" v-if="$isTenantAdmin" align="center" prop="operUserId" width="100" show-overflow-tooltip />
       <el-table-column label="操作人员账号" v-if="$isTenantAdmin" align="center" prop="operAccount" width="270" show-overflow-tooltip />
@@ -141,7 +141,7 @@
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="操作模块：">{{ form.title }} / {{ form.businessType }}</el-form-item>
+            <el-form-item label="操作模块：">{{ form.title }} / {{ form.operationType }}</el-form-item>
             <el-form-item
               label="操作人信息："
             >{{ form.operName }} / {{ form.operIp }}<span v-if="form.operLocation"> / {{ form.operLocation }}</span></el-form-item>
@@ -214,7 +214,7 @@ export default {
         size: 10,
         title: undefined,
         operName: undefined,
-        businessType: undefined,
+        operationType: undefined,
         status: undefined
       }
     }

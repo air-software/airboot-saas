@@ -5,7 +5,7 @@ import com.airboot.common.core.utils.DateUtils;
 import com.airboot.common.model.entity.TenantEntity;
 import com.airboot.common.model.enums.DeviceEnum;
 import com.airboot.common.model.enums.SuccessEnum;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -36,10 +36,10 @@ public class SysOperLog extends TenantEntity {
     private String title;
     
     /**
-     * 业务类型（0=其它,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据）
+     * 操作类型（0=其它,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据）
      */
-    @Excel(name = "业务类型")
-    private BusinessTypeEnum businessType;
+    @Excel(name = "操作类型")
+    private OperationTypeEnum operationType;
     
     /**
      * 请求方法

@@ -11,7 +11,7 @@ import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.LoginUser;
 import com.airboot.common.security.LoginUserContextHolder;
 import com.airboot.common.security.service.TokenService;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysUser;
 import com.airboot.project.system.service.ISysUserService;
 import org.springframework.validation.annotation.Validated;
@@ -55,7 +55,7 @@ public class SysProfileController extends BaseController {
     /**
      * 修改用户
      */
-    @Log(title = "个人信息", businessType = BusinessTypeEnum.修改)
+    @Log(title = "个人信息", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult updateProfile(@Validated @RequestBody SysUser user) {
         if (userService.updateUserProfile(user)) {
@@ -74,7 +74,7 @@ public class SysProfileController extends BaseController {
     /**
      * 修改密码
      */
-    @Log(title = "个人信息", businessType = BusinessTypeEnum.修改)
+    @Log(title = "个人信息", operationType = OperationTypeEnum.修改)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(String oldPassword, String newPassword) {
         if (StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword) || newPassword.length() < 6 || newPassword.length() > 50) {
@@ -99,7 +99,7 @@ public class SysProfileController extends BaseController {
     /**
      * 头像上传
      */
-    @Log(title = "个人信息", businessType = BusinessTypeEnum.修改)
+    @Log(title = "个人信息", operationType = OperationTypeEnum.修改)
     @PostMapping("/avatar")
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {

@@ -6,7 +6,7 @@ import com.airboot.common.core.config.properties.AppProp;
 import com.airboot.common.core.text.Convert;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.tool.gen.model.entity.GenTable;
 import com.airboot.project.tool.gen.model.entity.GenTableColumn;
 import com.airboot.project.tool.gen.model.vo.SearchGenTableVO;
@@ -78,7 +78,7 @@ public class GenController extends BaseController {
      * 导入表结构（保存）
      */
     @PreAuthorize("tool:gen:import")
-    @Log(title = "代码生成", businessType = BusinessTypeEnum.导入)
+    @Log(title = "代码生成", operationType = OperationTypeEnum.导入)
     @PostMapping("/importTable")
     public AjaxResult importTableSave(String tables) {
         String[] tableNames = Convert.toStrArray(tables);
@@ -92,7 +92,7 @@ public class GenController extends BaseController {
      * 修改保存代码生成业务
      */
     @PreAuthorize("tool:gen:edit")
-    @Log(title = "代码生成", businessType = BusinessTypeEnum.修改)
+    @Log(title = "代码生成", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult editSave(@Validated @RequestBody GenTable genTable) {
         genTableService.validateEdit(genTable);
@@ -104,7 +104,7 @@ public class GenController extends BaseController {
      * 删除代码生成
      */
     @PreAuthorize("tool:gen:remove")
-    @Log(title = "代码生成", businessType = BusinessTypeEnum.删除)
+    @Log(title = "代码生成", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{tableIds}")
     public AjaxResult remove(@PathVariable Long[] tableIds) {
         genTableService.deleteByIds(Arrays.asList(tableIds));
@@ -125,7 +125,7 @@ public class GenController extends BaseController {
      * 生成代码
      */
     @PreAuthorize("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessTypeEnum.生成代码)
+    @Log(title = "代码生成", operationType = OperationTypeEnum.生成代码)
     @GetMapping("/genCode/{tableName}")
     public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
         byte[] data = genTableService.generateCode(tableName);
@@ -136,7 +136,7 @@ public class GenController extends BaseController {
      * 批量生成代码
      */
     @PreAuthorize("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessTypeEnum.生成代码)
+    @Log(title = "代码生成", operationType = OperationTypeEnum.生成代码)
     @GetMapping("/batchGenCode")
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
         String[] tableNames = Convert.toStrArray(tables);

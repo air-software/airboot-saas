@@ -5,11 +5,11 @@ package ${packageName}.controller;
 #set($needValidate=true)
 #end
 #end
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import com.airboot.common.security.annotation.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.airboot.common.core.aspectj.lang.annotation.Log;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
 import ${packageName}.model.entity.${ClassName};
 import ${packageName}.model.vo.Search${ClassName}VO;
 #if($table.tplCategory.getCode() == "crud")
@@ -67,7 +67,7 @@ public class ${ClassName}Controller extends BaseController {
      * 导出${functionName}列表
      */
     @PreAuthorize("${permissionPrefix}:export")
-    @Log(title = "${functionName}", businessType = BusinessTypeEnum.导出)
+    @Log(title = "${functionName}", operationType = OperationTypeEnum.导出)
     @GetMapping("/export")
     public AjaxResult export(Search${ClassName}VO search) {
         List<${ClassName}> list = ${className}Service.getList(search);
@@ -88,7 +88,7 @@ public class ${ClassName}Controller extends BaseController {
      * 新增${functionName}
      */
     @PreAuthorize("${permissionPrefix}:add")
-    @Log(title = "${functionName}", businessType = BusinessTypeEnum.新增)
+    @Log(title = "${functionName}", operationType = OperationTypeEnum.新增)
     @PostMapping
 #if($needValidate)
     public AjaxResult add(@Validated @RequestBody ${ClassName} ${className}) {
@@ -102,7 +102,7 @@ public class ${ClassName}Controller extends BaseController {
      * 修改${functionName}
      */
     @PreAuthorize("${permissionPrefix}:edit")
-    @Log(title = "${functionName}", businessType = BusinessTypeEnum.修改)
+    @Log(title = "${functionName}", operationType = OperationTypeEnum.修改)
     @PutMapping
 #if($needValidate)
     public AjaxResult edit(@Validated @RequestBody ${ClassName} ${className}) {
@@ -116,7 +116,7 @@ public class ${ClassName}Controller extends BaseController {
      * 删除${functionName}
      */
     @PreAuthorize("${permissionPrefix}:remove")
-    @Log(title = "${functionName}", businessType = BusinessTypeEnum.删除)
+    @Log(title = "${functionName}", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{${pkColumn.javaField}s}")
     public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
         return toAjax(${className}Service.deleteByIds(Arrays.asList(${pkColumn.javaField}s)));

@@ -9,7 +9,7 @@ import com.airboot.common.security.LoginUserContextHolder;
 import com.airboot.common.security.annotation.PreAuthorize;
 import com.airboot.common.security.service.SysPermissionService;
 import com.airboot.common.security.service.TokenService;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysRole;
 import com.airboot.project.system.model.vo.SearchSysRoleVO;
 import com.airboot.project.system.service.ISysRoleService;
@@ -45,7 +45,7 @@ public class SysRoleController extends BaseController {
         return AjaxResult.success(page);
     }
     
-    @Log(title = "角色管理", businessType = BusinessTypeEnum.导出)
+    @Log(title = "角色管理", operationType = OperationTypeEnum.导出)
     @PreAuthorize("system:role:export")
     @GetMapping("/export")
     public AjaxResult export(SearchSysRoleVO search) {
@@ -67,7 +67,7 @@ public class SysRoleController extends BaseController {
      * 新增角色
      */
     @PreAuthorize("system:role:add")
-    @Log(title = "角色管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "角色管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysRole role) {
         if (!roleService.checkRoleNameUnique(role)) {
@@ -83,7 +83,7 @@ public class SysRoleController extends BaseController {
      * 修改保存角色
      */
     @PreAuthorize("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "角色管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
@@ -113,7 +113,7 @@ public class SysRoleController extends BaseController {
      * 修改保存数据权限
      */
     @PreAuthorize("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "角色管理", operationType = OperationTypeEnum.修改)
     @PutMapping("/dataScope")
     public AjaxResult dataScope(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
@@ -124,7 +124,7 @@ public class SysRoleController extends BaseController {
      * 状态修改
      */
     @PreAuthorize("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "角色管理", operationType = OperationTypeEnum.修改)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
@@ -139,7 +139,7 @@ public class SysRoleController extends BaseController {
      * 删除角色
      */
     @PreAuthorize("system:role:remove")
-    @Log(title = "角色管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "角色管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{roleIds}")
     public AjaxResult remove(@PathVariable Long[] roleIds) {
         return toAjax(roleService.deleteByIds(roleIds));

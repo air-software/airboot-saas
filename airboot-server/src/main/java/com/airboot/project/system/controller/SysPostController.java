@@ -5,7 +5,7 @@ import com.airboot.common.core.aspectj.lang.annotation.Log;
 import com.airboot.common.core.utils.poi.ExcelUtil;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysPost;
 import com.airboot.project.system.model.vo.SearchSysPostVO;
 import com.airboot.project.system.service.ISysPostService;
@@ -39,7 +39,7 @@ public class SysPostController extends BaseController {
         return AjaxResult.success(page);
     }
     
-    @Log(title = "岗位管理", businessType = BusinessTypeEnum.导出)
+    @Log(title = "岗位管理", operationType = OperationTypeEnum.导出)
     @PreAuthorize("system:post:export")
     @GetMapping("/export")
     public AjaxResult export(SearchSysPostVO search) {
@@ -61,7 +61,7 @@ public class SysPostController extends BaseController {
      * 新增岗位
      */
     @PreAuthorize("system:post:add")
-    @Log(title = "岗位管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "岗位管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysPost post) {
         if (!postService.checkPostNameUnique(post)) {
@@ -76,7 +76,7 @@ public class SysPostController extends BaseController {
      * 修改岗位
      */
     @PreAuthorize("system:post:edit")
-    @Log(title = "岗位管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "岗位管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysPost post) {
         if (!postService.checkPostNameUnique(post)) {
@@ -91,7 +91,7 @@ public class SysPostController extends BaseController {
      * 删除岗位
      */
     @PreAuthorize("system:post:remove")
-    @Log(title = "岗位管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "岗位管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{postIds}")
     public AjaxResult remove(@PathVariable Long[] postIds) {
         return toAjax(postService.deleteByIds(Arrays.asList(postIds)));

@@ -5,7 +5,7 @@ import com.airboot.common.core.aspectj.lang.annotation.Log;
 import com.airboot.common.core.utils.poi.ExcelUtil;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysTenant;
 import com.airboot.project.system.model.vo.SearchSysTenantVO;
 import com.airboot.project.system.service.ISysTenantService;
@@ -55,7 +55,7 @@ public class SysTenantController extends BaseController {
      * 导出租户管理列表
      */
     @PreAuthorize("system:tenant:export")
-    @Log(title = "租户管理", businessType = BusinessTypeEnum.导出)
+    @Log(title = "租户管理", operationType = OperationTypeEnum.导出)
     @GetMapping("/export")
     public AjaxResult export(SearchSysTenantVO search) {
         List<SysTenant> list = sysTenantService.getList(search);
@@ -76,7 +76,7 @@ public class SysTenantController extends BaseController {
      * 新增租户管理
      */
     @PreAuthorize("system:tenant:add")
-    @Log(title = "租户管理", businessType = BusinessTypeEnum.新增)
+    @Log(title = "租户管理", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@RequestBody SysTenant sysTenant) {
         return toAjax(sysTenantService.saveOrUpdate(sysTenant));
@@ -86,7 +86,7 @@ public class SysTenantController extends BaseController {
      * 修改租户管理
      */
     @PreAuthorize("system:tenant:edit")
-    @Log(title = "租户管理", businessType = BusinessTypeEnum.修改)
+    @Log(title = "租户管理", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@RequestBody SysTenant sysTenant) {
         return toAjax(sysTenantService.saveOrUpdate(sysTenant));
@@ -96,7 +96,7 @@ public class SysTenantController extends BaseController {
      * 删除租户管理
      */
     @PreAuthorize("system:tenant:remove")
-    @Log(title = "租户管理", businessType = BusinessTypeEnum.删除)
+    @Log(title = "租户管理", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(sysTenantService.deleteByIds(Arrays.asList(ids)));

@@ -10,7 +10,7 @@ import com.airboot.common.security.LoginUser;
 import com.airboot.common.security.annotation.PreAuthorize;
 import com.airboot.common.security.service.TokenService;
 import com.airboot.project.monitor.model.entity.SysUserOnline;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.monitor.service.ISysUserOnlineService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -75,7 +75,7 @@ public class SysUserOnlineController extends BaseController {
      * 强退用户
      */
     @PreAuthorize("monitor:online:forceLogout")
-    @Log(title = "在线用户", businessType = BusinessTypeEnum.强退)
+    @Log(title = "在线用户", operationType = OperationTypeEnum.强退)
     @DeleteMapping("/{userKey}/{uuid}")
     public AjaxResult forceLogout(@PathVariable String userKey, @PathVariable String uuid) {
         tokenService.delLoginUser(userKey, uuid);

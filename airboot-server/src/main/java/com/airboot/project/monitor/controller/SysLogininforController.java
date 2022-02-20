@@ -2,7 +2,7 @@ package com.airboot.project.monitor.controller;
 
 import com.airboot.common.component.BaseController;
 import com.airboot.common.core.aspectj.lang.annotation.Log;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.common.core.utils.poi.ExcelUtil;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.project.monitor.model.entity.SysLogininfor;
@@ -35,7 +35,7 @@ public class SysLogininforController extends BaseController {
         return AjaxResult.success(page);
     }
     
-    @Log(title = "登录日志", businessType = BusinessTypeEnum.导出)
+    @Log(title = "登录日志", operationType = OperationTypeEnum.导出)
     @PreAuthorize("monitor:logininfor:export")
     @GetMapping("/export")
     public AjaxResult export(SearchSysLogininforVO search) {
@@ -45,14 +45,14 @@ public class SysLogininforController extends BaseController {
     }
     
     @PreAuthorize("monitor:logininfor:remove")
-    @Log(title = "登录日志", businessType = BusinessTypeEnum.删除)
+    @Log(title = "登录日志", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{infoIds}")
     public AjaxResult remove(@PathVariable Long[] infoIds) {
         return toAjax(logininforService.deleteByIds(Arrays.asList(infoIds)));
     }
     
     @PreAuthorize("monitor:logininfor:remove")
-    @Log(title = "登录日志", businessType = BusinessTypeEnum.清空数据)
+    @Log(title = "登录日志", operationType = OperationTypeEnum.清空数据)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         logininforService.cleanLogininfor();

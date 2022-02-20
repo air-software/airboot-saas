@@ -2,7 +2,7 @@ package com.airboot.project.monitor.controller;
 
 import com.airboot.common.component.BaseController;
 import com.airboot.common.core.aspectj.lang.annotation.Log;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.common.core.utils.poi.ExcelUtil;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.project.monitor.model.entity.SysOperLog;
@@ -35,7 +35,7 @@ public class SysOperlogController extends BaseController {
         return AjaxResult.success(page);
     }
     
-    @Log(title = "操作日志", businessType = BusinessTypeEnum.导出)
+    @Log(title = "操作日志", operationType = OperationTypeEnum.导出)
     @PreAuthorize("monitor:operlog:export")
     @GetMapping("/export")
     public AjaxResult export(SearchSysOperLogVO search) {
@@ -50,7 +50,7 @@ public class SysOperlogController extends BaseController {
         return toAjax(operLogService.deleteByIds(Arrays.asList(operIds)));
     }
     
-    @Log(title = "操作日志", businessType = BusinessTypeEnum.清空数据)
+    @Log(title = "操作日志", operationType = OperationTypeEnum.清空数据)
     @PreAuthorize("monitor:operlog:remove")
     @DeleteMapping("/clean")
     public AjaxResult clean() {

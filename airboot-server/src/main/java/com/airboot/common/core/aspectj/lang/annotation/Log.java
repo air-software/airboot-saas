@@ -1,6 +1,6 @@
 package com.airboot.common.core.aspectj.lang.annotation;
 
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 
 import java.lang.annotation.*;
 
@@ -22,7 +22,7 @@ public @interface Log {
     /**
      * 功能
      */
-    BusinessTypeEnum businessType() default BusinessTypeEnum.其它;
+    OperationTypeEnum operationType() default OperationTypeEnum.其它;
     
     /**
      * 是否保存请求的参数

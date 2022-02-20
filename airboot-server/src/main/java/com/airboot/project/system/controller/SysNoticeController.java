@@ -4,7 +4,7 @@ import com.airboot.common.component.BaseController;
 import com.airboot.common.core.aspectj.lang.annotation.Log;
 import com.airboot.common.model.vo.AjaxResult;
 import com.airboot.common.security.annotation.PreAuthorize;
-import com.airboot.project.monitor.model.enums.BusinessTypeEnum;
+import com.airboot.project.monitor.model.enums.OperationTypeEnum;
 import com.airboot.project.system.model.entity.SysNotice;
 import com.airboot.project.system.model.vo.SearchSysNoticeVO;
 import com.airboot.project.system.service.ISysNoticeService;
@@ -50,7 +50,7 @@ public class SysNoticeController extends BaseController {
      * 新增通知公告
      */
     @PreAuthorize("system:notice:add")
-    @Log(title = "通知公告", businessType = BusinessTypeEnum.新增)
+    @Log(title = "通知公告", operationType = OperationTypeEnum.新增)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysNotice notice) {
         return toAjax(noticeService.saveOrUpdate(notice));
@@ -60,7 +60,7 @@ public class SysNoticeController extends BaseController {
      * 修改通知公告
      */
     @PreAuthorize("system:notice:edit")
-    @Log(title = "通知公告", businessType = BusinessTypeEnum.修改)
+    @Log(title = "通知公告", operationType = OperationTypeEnum.修改)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysNotice notice) {
         return toAjax(noticeService.saveOrUpdate(notice));
@@ -70,7 +70,7 @@ public class SysNoticeController extends BaseController {
      * 删除通知公告
      */
     @PreAuthorize("system:notice:remove")
-    @Log(title = "通知公告", businessType = BusinessTypeEnum.删除)
+    @Log(title = "通知公告", operationType = OperationTypeEnum.删除)
     @DeleteMapping("/{noticeIds}")
     public AjaxResult remove(@PathVariable Long[] noticeIds) {
         return toAjax(noticeService.deleteByIds(Arrays.asList(noticeIds)));
