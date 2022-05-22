@@ -1,12 +1,14 @@
 # Airboot-SaaS
 
-### 注意：如需非多租户版本请移步至 <a href="https://gitee.com/air-soft/airboot" target="_blank">Airboot</a> 。
+### 多租户动态数据源版本现已重磅发布！请前往 <a href="https://github.com/air-software/airboot-saas-datasource" target="_blank">Airboot-SaaS-DataSource</a> 。
+
+### 注意：如需非多租户版本请移步至 <a href="https://github.com/air-software/airboot" target="_blank">Airboot</a> 。
 
 ---
 
 ## 介绍
 
-Airboot-SaaS是一个轻量级通用多租户管理系统。在主要功能上将与 <a href="https://gitee.com/air-soft/airboot" target="_blank">Airboot</a> 保持一致，但是会兼容多租户的模式。
+Airboot-SaaS是一个轻量级通用多租户管理系统。在主要功能上将与 <a href="https://github.com/air-software/airboot" target="_blank">Airboot</a> 保持一致，但是会兼容多租户的模式。
 
 - 前端使用 Vue + Element
 - 后端使用 Spring Boot + Mybatis-Plus

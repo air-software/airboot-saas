@@ -9,7 +9,7 @@ export default {
   name: 'AirbootDoc',
   data() {
     return {
-      url: 'https://gitee.com/air-soft/airboot-saas'
+      url: 'https://github.com/air-software/airboot-saas'
     }
   },
   methods: {
