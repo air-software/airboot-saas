@@ -14,6 +14,11 @@ import lombok.Data;
 public class BaseSearchVO<T> extends Page<T> {
     
     /**
+     * 查询ID
+     */
+    private Long id;
+    
+    /**
      * 租户ID
      * 注意：为保障数据安全，如果在sql查询条件中需要用到tenantId，则不应取前端传递的值，而应在后端根据情况在controller或service层赋值。写在此处是为了方便mapper里直接用到SearchVO的tenantId，并不代表要接受前端传过来的tenantId。
      */
@@ -39,6 +44,11 @@ public class BaseSearchVO<T> extends Page<T> {
      * 状态
      */
     private SearchStatusEnum status;
+    
+    /**
+     * 查询类型，用于支持复杂查询条件
+     */
+    private String queryType;
     
     /**
      * 每页显示条数，由于所有查询条件都继承此VO，为避免查询list时受分页影响，因此条数默认为 100000

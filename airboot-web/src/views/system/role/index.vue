@@ -329,9 +329,9 @@ export default {
     },
     // 所有菜单节点数据
     getMenuAllCheckedKeys() {
-      // 目前被选中的菜单节点
-      let checkedKeys = this.$refs.menu.getHalfCheckedKeys()
       // 半选中的菜单节点
+      let checkedKeys = this.$refs.menu.getHalfCheckedKeys()
+      // 目前被选中的菜单节点
       let halfCheckedKeys = this.$refs.menu.getCheckedKeys()
       checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys)
       return checkedKeys
@@ -437,6 +437,7 @@ export default {
         this.getRoleMenuTreeselect(id)
       })
       getRole(id).then(data => {
+        this.$parseFormExtJson(data, 'remark')
         this.form = data
         this.open = true
         this.title = '修改角色'
@@ -459,6 +460,7 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          this.$seriFormExtJson(this.form, 'remark')
           if (this.form.id !== undefined) {
             this.form.menuIds = this.getMenuAllCheckedKeys()
             updateRole(this.form).then(data => {

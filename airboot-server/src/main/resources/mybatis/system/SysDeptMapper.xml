@@ -70,8 +70,9 @@
         update sys_dept
         <set>
             <if test="status != null">status = #{status},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            update_time = sysdate()
+            <if test="updaterId != null">updater_id = #{updaterId},</if>
+            <if test="updaterInfo != null and updaterInfo != ''">updater_info = #{updaterInfo},</if>
+            update_time = #{updateTime}
         </set>
         where id in (${ancestors})
     </update>

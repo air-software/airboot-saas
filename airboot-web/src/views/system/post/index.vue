@@ -247,6 +247,7 @@ export default {
       this.reset()
       const id = row.id || this.ids
       getPost(id).then(data => {
+        this.$parseFormExtJson(data, 'remark')
         this.form = data
         this.open = true
         this.title = '修改岗位'
@@ -257,6 +258,7 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          this.$seriFormExtJson(this.form, 'remark')
           if (this.form.id !== undefined) {
             updatePost(this.form).then(data => {
               this.msgSuccess('修改成功')

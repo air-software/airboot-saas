@@ -45,7 +45,8 @@ public class GenUtils {
         String dataType = getDbType(column.getColumnType());
         String columnName = column.getColumnName();
         column.setTableId(table.getId());
-        column.setCreateBy(table.getCreateBy());
+        column.setCreatorId(table.getCreatorId());
+        column.setCreatorInfo(table.getCreatorInfo());
         // 设置java字段名
         column.setJavaField(StringUtils.toCamelCase(columnName));
         

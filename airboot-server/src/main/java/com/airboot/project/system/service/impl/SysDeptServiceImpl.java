@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -201,9 +202,13 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @param dept 当前部门
      */
     private void updateParentDeptStatus(SysDept dept) {
-        String updateBy = dept.getUpdateBy();
+        Long updaterId = dept.getUpdaterId();
+        String updaterInfo = dept.getUpdaterInfo();
+        Date updateTime = dept.getUpdateTime();
         dept = deptMapper.selectById(dept.getId());
-        dept.setUpdateBy(updateBy);
+        dept.setUpdaterId(updaterId);
+        dept.setUpdaterInfo(updaterInfo);
+        dept.setUpdateTime(updateTime);
         deptMapper.updateDeptStatus(dept);
     }
     

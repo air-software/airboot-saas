@@ -62,7 +62,7 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://localhost/airboot-saas?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true
+        url: jdbc:mysql://localhost/airboot_saas?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
         username: root
         password: 123456
       # 从库数据源

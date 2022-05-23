@@ -1,6 +1,8 @@
 package com.airboot.common.core.mybatis;
 
+import com.airboot.common.core.utils.DateUtils;
 import com.airboot.common.core.utils.StringUtils;
+import com.airboot.common.security.LoginUser;
 import com.airboot.common.security.LoginUserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -25,7 +27,7 @@ import java.util.Properties;
  * 如果你需要全部改为逻辑删除，可参考Mybatis-Plus的文档进行配置 https://baomidou.com/guide/logic-delete.html
  * 需要注意的是，Mybatis-Plus的逻辑删除功能也只是针对其封装的删除方法，自己写的XML是不生效的，还是得像这样自己写拦截器。
  *
- * @author airoland
+ * @author airboot
  */
 @Slf4j
 @Component
@@ -52,9 +54,19 @@ public class LogicDeleteInterceptor implements Interceptor {
         
         // 如果是删除类型，并且sql语句中以update开头，就说明是逻辑删除语句
         if (SqlCommandType.DELETE.equals(sqlCommandType) && StringUtils.startsWithIgnoreCase(sql, "update")) {
-            String account = LoginUserContextHolder.getLoginUser().getAccount();
+            LoginUser loginUser = LoginUserContextHolder.getLoginUser();
+            Long userId = loginUser.getUserId();
+            String personName = loginUser.getPersonName();
+            String account = loginUser.getAccount();
             // 为逻辑删除的数据加上操作人和操作时间
-            String replaceSql = ", update_by = '" + account + "', update_time = now() where";
+            String tableAlias = "";
+            if (sql.toLowerCase().contains(" left join")) {
+                // 如果有联表，则需要获取表别名
+                String[] tempArray = sql.toLowerCase().split(" left join")[0].split(" ");
+                tableAlias = tempArray[tempArray.length - 1] + ".";
+            }
+            String updaterInfo = personName + "_" + account;
+            String replaceSql = ", " + tableAlias + "updater_id = " + userId + ", " + tableAlias + "updater_info = '" + updaterInfo + "', " + tableAlias + "update_time = '" + DateUtils.getTime() + "' where";
             String newSql = StringUtils.replaceIgnoreCase(sql, " where", replaceSql);
     
             //通过反射修改原sql语句

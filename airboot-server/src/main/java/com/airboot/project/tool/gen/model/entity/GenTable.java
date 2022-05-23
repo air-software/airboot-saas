@@ -101,6 +101,11 @@ public class GenTable extends BaseEntity {
     private String options;
     
     /**
+     * 备注
+     */
+    private String remark;
+    
+    /**
      * 树编码字段
      */
     @TableField(exist = false)

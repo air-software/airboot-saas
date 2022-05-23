@@ -21,11 +21,13 @@ create table sys_table (
   status_example    tinyint(4)      default 0                  comment '枚举举例1',
   type_example      smallint(6)     default 100                comment '枚举举例2',
 -- 以下为父类BaseEntity的字段，继承BaseEntity的表都要有这些字段（关系表可以不继承）
-  create_by         varchar(64)     default ''                 comment '创建者',
+  creator_id        bigint(20)      default 0                  comment '创建者id',
+  creator_info      varchar(500)    default ''                 comment '创建时姓名_登录账号',
   create_time 	    datetime                                   comment '创建时间',
-  update_by         varchar(64)     default ''                 comment '更新者',
+  updater_id        bigint(20)      default 0                  comment '更新者id',
+  updater_info      varchar(500)    default ''                 comment '更新时姓名_登录账号',
   update_time       datetime                                   comment '更新时间',
-  remark            varchar(500)    default ''                 comment '备注',
+  ext_json          varchar(3000)   default ''                 comment '扩展JSON',
   deleted           bit(1)          default 0                  comment '删除标志（false=存在,true=删除）',
   version           int(11)         default 0                  comment '乐观锁数据版本',
   primary key (id)

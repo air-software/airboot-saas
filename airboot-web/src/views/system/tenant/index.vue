@@ -123,7 +123,7 @@
       @pagination="getPage"
     />
 
-    <!-- 添加或修改租户管理对话框 -->
+    <!-- 添加或修改租户对话框 -->
     <el-dialog :title="title" :visible.sync="open" :close-on-click-modal="false" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="租户名称" prop="tenantName">
@@ -148,6 +148,9 @@
             <el-radio label="正常" />
             <el-radio label="停用" />
           </el-radio-group>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -175,7 +178,7 @@ export default {
       multiple: true,
       // 总条数
       total: 0,
-      // 租户管理表格数据
+      // 租户表格数据
       tableData: [],
       // 弹出层标题
       title: '',
@@ -212,7 +215,7 @@ export default {
     this.getPage()
   },
   methods: {
-    /** 查询租户管理列表 */
+    /** 查询租户列表 */
     getPage() {
       this.loading = true
       pageTenant(this.queryParams).then(data => {
@@ -241,16 +244,17 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加租户管理'
+      this.title = '添加租户'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
       const id = row.id || this.ids
       getTenant(id).then(data => {
+        this.$parseFormExtJson(data, 'remark')
         this.form = data
         this.open = true
-        this.title = '修改租户管理'
+        this.title = '修改租户'
       })
     },
     // 取消按钮
@@ -276,6 +280,7 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          this.$seriFormExtJson(this.form, 'remark')
           if (this.form.id !== undefined) {
             updateTenant(this.form).then(data => {
               this.msgSuccess('修改成功')
@@ -295,7 +300,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除租户管理编号为【' + ids + '】的数据项?', '警告', {
+      this.$confirm('是否确认删除租户编号为【' + ids + '】的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -309,7 +314,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有租户管理数据项?', '警告', {
+      this.$confirm('是否确认导出所有租户数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

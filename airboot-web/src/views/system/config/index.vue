@@ -113,7 +113,6 @@
       <el-table-column label="系统内置" align="center" prop="builtIn" :formatter="builtInFormat" />
       <el-table-column label="需要登录" align="center" prop="needLogin" :formatter="needLoginFormat" />
       <el-table-column label="参数状态" align="center" prop="status" />
-      <el-table-column label="备注" align="center" prop="remark" show-overflow-tooltip />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -312,6 +311,7 @@ export default {
       this.reset()
       const id = row.id || this.ids
       getConfig(id).then(data => {
+        this.$parseFormExtJson(data, 'remark')
         this.form = data
         this.open = true
         this.title = '修改参数'
@@ -322,6 +322,7 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          this.$seriFormExtJson(this.form, 'remark')
           if (this.form.id !== undefined) {
             updateConfig(this.form).then(data => {
               this.msgSuccess('修改成功')

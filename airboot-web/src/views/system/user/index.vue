@@ -561,6 +561,7 @@ export default {
       this.getTreeselect()
       const id = row.id || this.ids
       getUser(id).then(data => {
+        this.$parseFormExtJson(data.user, 'remark')
         this.form = data.user
         this.postOptions = data.posts
         this.roleOptions = data.roles
@@ -590,6 +591,7 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          this.$seriFormExtJson(this.form, 'remark')
           if (this.form.id !== undefined) {
             updateUser(this.form).then(data => {
               this.msgSuccess('修改成功')

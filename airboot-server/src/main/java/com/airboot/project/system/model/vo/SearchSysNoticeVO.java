@@ -27,6 +27,6 @@ public class SearchSysNoticeVO extends BaseSearchVO {
     /**
      * 创建者
      */
-    private String createBy;
+    private String creatorInfo;
 
 }

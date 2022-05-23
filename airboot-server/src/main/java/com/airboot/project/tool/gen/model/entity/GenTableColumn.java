@@ -155,12 +155,12 @@ public class GenTableColumn extends BaseEntity {
     
     public static boolean isSuperColumn(String javaField) {
         return StringUtils.equalsAnyIgnoreCase(javaField,
-                // BaseEntity
-                "id", "createBy", "createTime", "updateBy", "updateTime", "remark", "dataScope", "deleted", "version",
-                // TenantEntity
-                "tenantId",
-                // TreeEntity
-                "parentName", "parentId", "orderNum", "ancestors");
+            // BaseEntity
+            "id", "creatorId", "creatorInfo", "createTime", "updaterId", "updaterInfo", "updateTime", "extJson", "dataScope", "deleted", "version",
+            // TenantEntity
+            "tenantId",
+            // TreeEntity
+            "parentName", "parentId", "orderNum", "ancestors");
     }
     
     /**
@@ -173,7 +173,7 @@ public class GenTableColumn extends BaseEntity {
     public static boolean isSearchSuperColumn(String javaField) {
         return StringUtils.equalsAnyIgnoreCase(javaField,
             // BaseSearchVO
-            "tenantId", "createTime", "updateTime", "beginTime", "endTime", "dataScopeSql", "status",
+            "id", "tenantId", "createTime", "updateTime", "beginTime", "endTime", "dataScopeSql", "status",
             // Page
             "total", "size", "current", "records", "orders");
     }
@@ -184,7 +184,7 @@ public class GenTableColumn extends BaseEntity {
     
     public static boolean isUsableColumn(String javaField) {
         // isSuperColumn()中的名单用于避免生成多余Domain属性，若某些属性在生成页面时需要用到不能忽略，则放在此处白名单
-        return StringUtils.equalsAnyIgnoreCase(javaField, "parentId", "orderNum", "remark");
+        return StringUtils.equalsAnyIgnoreCase(javaField, "parentId", "orderNum");
     }
     
     public String readConverterExp() {

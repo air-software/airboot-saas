@@ -10,9 +10,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建者" prop="createBy">
+      <el-form-item label="创建者" prop="creatorInfo">
         <el-input
-          v-model="queryParams.createBy"
+          v-model="queryParams.creatorInfo"
           placeholder="请输入创建者账号"
           clearable
           size="small"
@@ -84,13 +84,13 @@
         prop="status"
         width="100"
       />
-      <el-table-column label="创建者" align="center" prop="createBy" width="100" />
+      <el-table-column label="创建者" align="center" prop="creatorInfo" width="120" :formatter="creatorInfoFormat" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="200">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -190,7 +190,7 @@ export default {
         current: 1,
         size: 10,
         noticeTitle: undefined,
-        createBy: undefined,
+        creatorInfo: undefined,
         status: undefined
       },
       // 表单参数
@@ -219,6 +219,9 @@ export default {
         this.total = data.total
         this.loading = false
       })
+    },
+    creatorInfoFormat(row) {
+      return row.creatorInfo.split('_')[0]
     },
     // 取消按钮
     cancel() {

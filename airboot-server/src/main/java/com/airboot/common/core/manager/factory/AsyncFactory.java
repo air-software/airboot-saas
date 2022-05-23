@@ -74,7 +74,6 @@ public class AsyncFactory {
                         .loginIp(ip)
                         .loginLocation(logininfor.getLoginLocation())
                         .loginDate(new Date())
-                        .updateBy(recordLogininforVO.getAccount())
                         .build();
                     SpringUtils.getBean(ISysUserService.class).updateUserProfile(user);
                 }

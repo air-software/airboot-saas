@@ -22,11 +22,13 @@
         <result property="loginIp" column="login_ip"/>
         <result property="loginLocation" column="login_location"/>
         <result property="loginDate" column="login_date"/>
-        <result property="createBy" column="create_by"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorInfo" column="creator_info"/>
         <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterInfo" column="updater_info"/>
         <result property="updateTime" column="update_time"/>
-        <result property="remark" column="remark"/>
+        <result property="extJson" column="ext_json"/>
         <result property="deleted" column="deleted"/>
         <result property="version" column="version"/>
         <association property="dept" javaType="com.airboot.project.system.model.entity.SysDept" resultMap="deptResult"/>
@@ -36,6 +38,7 @@
     <resultMap id="deptResult" type="com.airboot.project.system.model.entity.SysDept">
         <id property="id" column="deptId"/>
         <result property="parentId" column="parent_id"/>
+        <result property="ancestors" column="ancestors"/>
         <result property="deptName" column="dept_name"/>
         <result property="orderNum" column="order_num"/>
         <result property="leader" column="leader"/>

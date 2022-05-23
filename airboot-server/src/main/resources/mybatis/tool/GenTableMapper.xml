@@ -16,11 +16,14 @@
         <result property="functionName" column="function_name"/>
         <result property="functionAuthor" column="function_author"/>
         <result property="options" column="options"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorInfo" column="creator_info"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterInfo" column="updater_info"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="extJson" column="ext_json"/>
         <result property="deleted" column="deleted"/>
         <result property="version" column="version"/>
         <collection property="columns" javaType="java.util.List" resultMap="GenTableColumnResult"/>
@@ -47,10 +50,13 @@
         <result property="htmlType" column="html_type"/>
         <result property="enumFullName" column="enum_full_name"/>
         <result property="sort" column="sort"/>
-        <result property="createBy" column="create_by"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorInfo" column="creator_info"/>
         <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updaterInfo" column="updater_info"/>
         <result property="updateTime" column="update_time"/>
+        <result property="extJson" column="ext_json"/>
     </resultMap>
     
     <sql id="selectList">

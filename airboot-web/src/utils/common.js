@@ -1,6 +1,5 @@
 /**
- * 通用js方法封装处理
- * Copyright (c) 2020 airboot
+ * 通用js方法封装
  */
 
 const baseURL = process.env.VUE_APP_BASE_API

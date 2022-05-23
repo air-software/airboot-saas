@@ -14,8 +14,8 @@
             <if test="noticeType != null">
                 AND notice_type = #{noticeType}
             </if>
-            <if test="createBy != null and createBy != ''">
-                AND create_by like concat('%', #{createBy}, '%')
+            <if test="creatorInfo != null and creatorInfo != ''">
+                AND creator_info like concat('%', #{creatorInfo}, '%')
             </if>
         </where>
     </select>

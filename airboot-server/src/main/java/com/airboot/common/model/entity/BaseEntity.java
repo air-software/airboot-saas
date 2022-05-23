@@ -34,10 +34,16 @@ public class BaseEntity implements Serializable {
     private Long id;
     
     /**
-     * 创建者
+     * 创建者id
      */
     @TableField(fill = FieldFill.INSERT)
-    private String createBy;
+    private Long creatorId;
+    
+    /**
+     * 创建时姓名_登录账号
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private String creatorInfo;
     
     /**
      * 创建时间
@@ -47,10 +53,16 @@ public class BaseEntity implements Serializable {
     private Date createTime;
     
     /**
-     * 更新者
+     * 更新者id
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updateBy;
+    private Long updaterId;
+    
+    /**
+     * 更新时姓名_登录账号
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private String updaterInfo;
     
     /**
      * 更新时间
@@ -60,9 +72,9 @@ public class BaseEntity implements Serializable {
     private Date updateTime;
     
     /**
-     * 备注
+     * 扩展JSON
      */
-    private String remark;
+    private String extJson;
     
     /**
      * 是否已删除

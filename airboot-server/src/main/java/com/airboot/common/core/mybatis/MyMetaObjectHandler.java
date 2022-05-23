@@ -12,8 +12,7 @@ import java.util.Optional;
 /**
  * Mybatis-Plus自动填充处理器
  *
- * @author airoland
- * @date 2020/8/16 15:07
+ * @author airboot
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
@@ -24,28 +23,40 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("updateTime", new Date(), metaObject);
         
         LoginUser loginUser = LoginUserContextHolder.getLoginUser();
-        // 如果能获取到登录用户，则设置创建者/更新者为登录账号，否则设为空字符串
+        // 如果能获取到登录用户，则设置创建者/更新者信息，否则（如定时任务场景）按手动设置处理，如手动未设置，则设为0和“系统”。
         if (loginUser != null) {
-            this.setFieldValByName("createBy", loginUser.getAccount(), metaObject);
-            this.setFieldValByName("updateBy", loginUser.getAccount(), metaObject);
+            this.setFieldValByName("creatorId", loginUser.getUserId(), metaObject);
+            this.setFieldValByName("creatorInfo", loginUser.getPersonName() + "_" + loginUser.getAccount(), metaObject);
+            
+            this.setFieldValByName("updaterId", loginUser.getUserId(), metaObject);
+            this.setFieldValByName("updaterInfo", loginUser.getPersonName() + "_" + loginUser.getAccount(), metaObject);
         } else {
-            String createBy = Optional.ofNullable((String) metaObject.getValue("createBy")).orElse("");
-            this.setFieldValByName("createBy", createBy, metaObject);
-            String updateBy = Optional.ofNullable((String) metaObject.getValue("updateBy")).orElse("");
-            this.setFieldValByName("updateBy", updateBy, metaObject);
+            Long creatorId = Optional.ofNullable((Long) metaObject.getValue("creatorId")).orElse(0L);
+            String creatorInfo = Optional.ofNullable((String) metaObject.getValue("creatorInfo")).orElse("系统");
+            this.setFieldValByName("creatorId", creatorId, metaObject);
+            this.setFieldValByName("creatorInfo", creatorInfo, metaObject);
+            
+            Long updaterId = Optional.ofNullable((Long) metaObject.getValue("updaterId")).orElse(0L);
+            String updaterInfo = Optional.ofNullable((String) metaObject.getValue("updaterInfo")).orElse("系统");
+            this.setFieldValByName("updaterId", updaterId, metaObject);
+            this.setFieldValByName("updaterInfo", updaterInfo, metaObject);
         }
     }
     
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("updateTime", new Date(), metaObject);
-    
         LoginUser loginUser = LoginUserContextHolder.getLoginUser();
         if (loginUser != null) {
-            this.setFieldValByName("updateBy", loginUser.getAccount(), metaObject);
+            this.setFieldValByName("updaterId", loginUser.getUserId(), metaObject);
+            this.setFieldValByName("updaterInfo", loginUser.getPersonName() + "_" + loginUser.getAccount(), metaObject);
+            this.setFieldValByName("updateTime", new Date(), metaObject);
         } else {
-            String updateBy = Optional.ofNullable((String) metaObject.getValue("updateBy")).orElse("");
-            this.setFieldValByName("updateBy", updateBy, metaObject);
+            Long updaterId = Optional.ofNullable((Long) metaObject.getValue("updaterId")).orElse(0L);
+            String updaterInfo = Optional.ofNullable((String) metaObject.getValue("updaterInfo")).orElse("系统");
+            Date updateTime = Optional.ofNullable((Date) metaObject.getValue("updateTime")).orElse(new Date());
+            this.setFieldValByName("updaterId", updaterId, metaObject);
+            this.setFieldValByName("updaterInfo", updaterInfo, metaObject);
+            this.setFieldValByName("updateTime", updateTime, metaObject);
         }
     }
 }
