@@ -13,7 +13,6 @@ import java.util.Map;
  * 身份证工具类
  *
  * @author airboot
- * @date 2020/9/3 13:43
  */
 @Slf4j
 public class IdCardUtils extends StringUtils {

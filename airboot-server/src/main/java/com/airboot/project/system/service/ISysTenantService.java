@@ -10,7 +10,6 @@ import java.util.List;
  * 租户管理Service接口
  * 
  * @author airboot
- * @date 2020-09-18
  */
 public interface ISysTenantService {
 

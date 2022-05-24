@@ -8,7 +8,6 @@ import lombok.Data;
  * 查询租户管理分页条件
  * 
  * @author airboot
- * @date 2020-09-18
  */
 @Data
 public class SearchSysTenantVO extends BaseSearchVO {
