@@ -108,7 +108,7 @@ public class SysLoginController {
         dataMap.put("roles", roles);
         dataMap.put("permissions", permissions);
         dataMap.put("tenant", tenantService.getById(user.getTenantId()));
-        dataMap.put("enums", EnumUtil.getAllNameList());
+        dataMap.put("enums", EnumUtil.getAllFrontShowNameList());
         return AjaxResult.success(dataMap);
     }
     
