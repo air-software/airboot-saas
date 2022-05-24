@@ -9,6 +9,8 @@ export default {
   computed: {
     // 引入所有vuex的getter，可以直接通过this来调用，属性名前加上$表示全局属性
     ...mapGetters({
+      $loginTenant: 'tenant',
+      $loginUser: 'user',
       $isTenantAdmin: 'isTenantAdmin'
     })
   },
@@ -18,6 +20,20 @@ export default {
     }),
     // 深拷贝
     $clone: obj => JSON.parse(JSON.stringify(obj)),
+    /**
+     * 将传入的参数对象附加到指定URL上
+     * @param url 指定URL
+     * @param params 参数对象
+     */
+    $paramsToUrl(url, params) {
+      if (!params) return url
+      let suffix = ''
+      for (const key in params) {
+        suffix += `&${key}=${params[key]}`
+      }
+      suffix = url.indexOf('?') > -1 ? suffix : suffix.replace('&', '?')
+      return url + suffix
+    },
     /**
      * 数组转对象
      * @param array

@@ -177,7 +177,7 @@
                 v-hasPermi="['system:user:edit']"
               >修改</el-button>
               <el-button
-                v-if="scope.row.id !== 1"
+                v-if="scope.row.id !== 1 && scope.row.id !== $loginUser.id"
                 size="mini"
                 type="text"
                 icon="el-icon-delete"

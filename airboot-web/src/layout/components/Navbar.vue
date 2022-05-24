@@ -37,7 +37,7 @@
 
       </template>
 
-      <span class="name">{{ user.personName }}</span>
+      <span class="name">{{ $loginUser.personName }}</span>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -91,8 +91,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'device',
-      'user'
+      'device'
     ]),
     setting: {
       get() {
@@ -128,8 +127,11 @@ export default {
     },
     getTenantList() {
       listTenant().then(data => {
+        data.forEach(item => {
+          item.id = item.id.toString()
+        })
         this.tenantList = data
-        this.tenantId = parseInt(localStorage.getItem('tenantId') || 1)
+        this.tenantId = localStorage.getItem('tenantId') || '1'
       })
     },
     changeTenant(val) {

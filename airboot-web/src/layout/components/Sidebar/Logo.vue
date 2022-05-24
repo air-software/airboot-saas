@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import logoImg from '@/assets/logo/logo.png'
 
 export default {
@@ -31,11 +30,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'tenant'
-    ]),
     title() {
-      return (this.tenant && this.tenant.tenantName) || ''
+      return (this.$loginTenant && this.$loginTenant.tenantName) || ''
     }
   }
 }
