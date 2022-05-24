@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * 租户基类
  *
- * @author airoland
+ * @author airboot
  */
 @Data
 @SuperBuilder

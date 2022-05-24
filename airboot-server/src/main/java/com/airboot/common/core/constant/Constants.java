@@ -85,7 +85,7 @@ public class Constants {
     /**
      * 不拦截的路径
      */
-    public static final String[] EXCLUDE_PATH_PATTERNS = {"/login", "/needCaptcha", "/captchaImage", "/profile/**", "/common/download**", "/common/download/resource**",
+    public static final String[] EXCLUDE_PATH_PATTERNS = {"/login", "/needCaptcha", "/captchaImage", RESOURCE_PREFIX + "/**", "/common/download**", "/common/download/resource**",
         "/system/config/unauth-key/*",
         "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/**/*.ttf", "/**/*.png", "/**/*.gif", "/**/*.ico", "/**/*.jpg",
         "/swagger-ui.html", "/**/v2**", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**",

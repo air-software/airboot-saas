@@ -1,6 +1,5 @@
  /**
  * 角色权限处理
- * Copyright (c) 2020 airboot
  */
 
 import store from '@/store'

@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * 租户管理对象 sys_tenant
  * 
- * @author airoland
+ * @author airboot
  * @date 2020-09-18
  */
 @Data

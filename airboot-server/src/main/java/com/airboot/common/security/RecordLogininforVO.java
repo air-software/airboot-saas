@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * 用户登录信息记录
  *
- * @author airoland
+ * @author airboot
  */
 @Data
 @Builder

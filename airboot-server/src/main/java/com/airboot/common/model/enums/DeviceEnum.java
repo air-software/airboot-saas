@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 操作设备枚举
  *
- * @author airoland
+ * @author airboot
  */
 @Getter
 @AllArgsConstructor

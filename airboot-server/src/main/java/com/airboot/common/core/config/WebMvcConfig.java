@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * MVC配置
  *
- * @author airoland
+ * @author airboot
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

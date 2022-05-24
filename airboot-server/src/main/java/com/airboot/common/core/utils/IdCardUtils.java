@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 身份证工具类
  *
- * @author airoland
+ * @author airboot
  * @date 2020/9/3 13:43
  */
 @Slf4j

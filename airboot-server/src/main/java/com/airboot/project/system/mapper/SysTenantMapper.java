@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 租户管理Mapper接口
  * 
- * @author airoland
+ * @author airboot
  * @date 2020-09-18
  */
 public interface SysTenantMapper extends MyBaseMapper<SysTenant> {

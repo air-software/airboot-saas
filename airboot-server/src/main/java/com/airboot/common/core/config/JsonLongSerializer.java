@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Long型序列化配置
  *
- * @author airoland
+ * @author airboot
  */
 
 public class JsonLongSerializer extends JsonSerializer<Long> {

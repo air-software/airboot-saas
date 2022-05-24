@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 租户类型
  *
- * @author airoland
+ * @author airboot
  */
 @Getter
 @AllArgsConstructor
