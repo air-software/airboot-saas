@@ -70,7 +70,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 是否为外链（false=否,true=是）
      */
-    private boolean iframe;
+    private Boolean iframe;
     
     /**
      * 类型（0目录 1菜单 2按钮）
@@ -81,7 +81,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 是否隐藏（0显示 1隐藏）
      */
-    private boolean hidden;
+    private Boolean hidden;
     
     /**
      * 菜单状态（0停用 1正常）

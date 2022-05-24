@@ -86,7 +86,7 @@ public class SysMenuController extends BaseController {
     public AjaxResult add(@Validated @RequestBody SysMenu menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
             return fail("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        } else if (menu.isIframe()
+        } else if (menu.getIframe()
                 && !StringUtils.startsWithAny(menu.getPath(), Constants.HTTP, Constants.HTTPS)) {
             return fail("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
         }
@@ -103,7 +103,7 @@ public class SysMenuController extends BaseController {
     public AjaxResult edit(@Validated @RequestBody SysMenu menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
             return fail("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        } else if (menu.isIframe()
+        } else if (menu.getIframe()
                 && !StringUtils.startsWithAny(menu.getPath(), Constants.HTTP, Constants.HTTPS)) {
             return fail("修改菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
         } else if (menu.getId().equals(menu.getParentId())) {

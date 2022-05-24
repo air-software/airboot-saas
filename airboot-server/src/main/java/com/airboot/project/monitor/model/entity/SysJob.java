@@ -74,7 +74,7 @@ public class SysJob extends BaseEntity {
      * 是否并发执行（0禁止 1允许）
      */
     @Excel(name = "并发执行", readConverterExp = "false=禁止,true=允许")
-    private boolean concurrent;
+    private Boolean concurrent;
     
     /**
      * 任务状态（0暂停 1正常）

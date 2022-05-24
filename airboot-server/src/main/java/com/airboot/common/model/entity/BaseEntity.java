@@ -79,7 +79,7 @@ public class BaseEntity implements Serializable {
     /**
      * 是否已删除
      */
-    private boolean deleted;
+    private Boolean deleted;
     
     /**
      * 数据版本，更新时加1

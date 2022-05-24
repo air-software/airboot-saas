@@ -139,7 +139,7 @@ public class GenTable extends BaseEntity {
      * 是否自动生成Mybatis ResultMap
      */
     @TableField(exist = false)
-    private boolean autoResultMap;
+    private Boolean autoResultMap;
     
     /**
      * 请求参数

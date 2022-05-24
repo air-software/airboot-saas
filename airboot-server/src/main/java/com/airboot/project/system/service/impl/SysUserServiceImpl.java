@@ -101,7 +101,7 @@ public class SysUserServiceImpl implements ISysUserService {
     public List<SysUser> getAllNormalList() {
         return userMapper.selectList(new LambdaQueryWrapper<SysUser>()
             .eq(SysUser::getStatus, StatusEnum.正常)
-            .eq(SysUser::isDeleted, false));
+            .eq(SysUser::getDeleted, false));
     }
     
     /**
@@ -444,7 +444,7 @@ public class SysUserServiceImpl implements ISysUserService {
                     // 查找是否已存在这个用户（以手机号为依据）
                     SysUser existUser = userMapper.getOne(new LambdaQueryWrapper<SysUser>()
                         .eq(SysUser::getMobile, user.getMobile())
-                        .eq(SysUser::isDeleted, false), false);
+                        .eq(SysUser::getDeleted, false), false);
                     
                     if (existUser != null) {
                         user.setId(existUser.getId());

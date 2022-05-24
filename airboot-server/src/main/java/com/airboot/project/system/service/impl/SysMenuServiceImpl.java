@@ -122,7 +122,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         List<RouterVO> routers = new LinkedList<>();
         for (SysMenu menu : menus) {
             RouterVO router = new RouterVO();
-            router.setHidden(menu.isHidden());
+            router.setHidden(menu.getHidden());
             router.setName(StringUtils.capitalize(menu.getPath()));
             router.setPath(getRouterPath(menu));
             router.setComponent(getComponent(menu));
@@ -264,7 +264,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         String routerPath = menu.getPath();
         // 非外链并且是一级目录（类型为目录）
         if (0 == menu.getParentId() && MenuTypeEnum.目录.equals(menu.getMenuType())
-                && !menu.isIframe()) {
+                && !menu.getIframe()) {
             routerPath = "/" + menu.getPath();
         }
         // 非外链并且是一级目录（类型为菜单）
@@ -296,7 +296,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     public boolean isMeunFrame(SysMenu menu) {
         return menu.getParentId() == 0 && MenuTypeEnum.菜单.equals(menu.getMenuType())
-                && !menu.isIframe();
+                && !menu.getIframe();
     }
     
     /**

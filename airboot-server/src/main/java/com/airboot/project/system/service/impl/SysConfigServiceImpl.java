@@ -55,7 +55,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public String getUnauthByKey(String configKey) {
-        SysConfig retConfig = configMapper.getOne(new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, configKey).eq(SysConfig::isNeedLogin, false).eq(SysConfig::getStatus, StatusEnum.正常), false);
+        SysConfig retConfig = configMapper.getOne(new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, configKey).eq(SysConfig::getNeedLogin, false).eq(SysConfig::getStatus, StatusEnum.正常), false);
         return StringUtils.isNotNull(retConfig) ? retConfig.getConfigValue() : "";
     }
     

@@ -54,13 +54,13 @@ public class SysConfig extends TenantEntity {
      * 是否系统内置
      */
     @Excel(name = "是否系统内置", readConverterExp = "false=否,true=是")
-    private boolean builtIn;
+    private Boolean builtIn;
     
     /**
      * 是否需要登录
      */
     @Excel(name = "是否需要登录", readConverterExp = "false=否,true=是")
-    private boolean needLogin;
+    private Boolean needLogin;
     
     /**
      * 状态（0停用 1正常）

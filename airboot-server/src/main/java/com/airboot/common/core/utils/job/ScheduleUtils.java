@@ -21,7 +21,7 @@ public class ScheduleUtils {
      * @return 具体执行任务类
      */
     private static Class<? extends Job> getQuartzJobClass(SysJob sysJob) {
-        return sysJob.isConcurrent() ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
+        return sysJob.getConcurrent() ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
     }
     
     /**
