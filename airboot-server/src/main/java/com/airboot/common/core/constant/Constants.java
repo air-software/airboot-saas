@@ -113,9 +113,4 @@ public class Constants {
      */
     public static final Long ADMIN_TENANT_ID = 1L;
     
-    /**
-     * 管理员RoleKey
-     */
-    public static final String ADMIN_ROLE_KEY = "admin";
-    
 }

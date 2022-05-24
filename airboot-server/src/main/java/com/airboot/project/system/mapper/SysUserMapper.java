@@ -2,6 +2,7 @@ package com.airboot.project.system.mapper;
 
 import com.airboot.common.component.MyBaseMapper;
 import com.airboot.project.system.model.entity.SysUser;
+import com.airboot.project.system.model.enums.RoleTypeEnum;
 import com.airboot.project.system.model.vo.SearchSysUserVO;
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -103,12 +104,19 @@ public interface SysUserMapper extends MyBaseMapper<SysUser> {
     SysUser checkEmailUnique(String email);
     
     /**
-     * 根据roleKey获取用户列表（忽略多租户ID自动拼接，以传入的tenantId为准）
+     * 根据roleType获取用户列表
      *
-     * @param roleKey 角色Key
-     * @param tenantId 租户ID
-     * @return
+     * @param roleType 角色类型
+     * @return 结果
+     */
+    List<SysUser> findListByRoleType(@Param("roleType") RoleTypeEnum roleType);
+    
+    /**
+     * 根据roleType获取用户列表（忽略多租户ID拼接）
+     *
+     * @param roleType 角色类型
+     * @return 结果
      */
     @InterceptorIgnore(tenantLine = "true")
-    List<SysUser> findListByRoleKey(@Param("roleKey") String roleKey, @Param("tenantId") Long tenantId);
+    List<SysUser> findListByRoleTypeIgnoreTenant(@Param("roleType") RoleTypeEnum roleType);
 }

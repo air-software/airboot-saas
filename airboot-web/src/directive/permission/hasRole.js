@@ -7,7 +7,7 @@ import store from '@/store'
 export default {
   inserted(el, binding, vnode) {
     const { value } = binding
-    const super_admin = 'admin'
+    const super_admin = '超级租户管理员'
     const roles = store.getters && store.getters.roles
 
     if (value && value instanceof Array && value.length > 0) {
@@ -21,7 +21,7 @@ export default {
         el.parentNode && el.parentNode.removeChild(el)
       }
     } else {
-      throw new Error(`请设置角色权限标签值`)
+      throw new Error(`请设置角色类型`)
     }
   }
 }
