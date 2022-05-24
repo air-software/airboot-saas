@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd()" v-hasPermi="['system:menu:add']">新增</el-button>
+        <el-button type="success" icon="el-icon-plus" size="mini" @click="handleAdd()" v-hasPermi="['system:menu:add']">新增</el-button>
       </el-form-item>
     </el-form>
 
@@ -115,6 +115,8 @@
               </el-popover>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="menuName">
               <el-input v-model="form.menuName" placeholder="请输入菜单名称" />
@@ -125,6 +127,8 @@
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item v-if="form.menuType !== '按钮'" label="是否外链">
               <el-radio-group v-model="form.iframe">
@@ -138,6 +142,8 @@
               <el-input v-model="form.path" placeholder="请输入路由地址" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12" v-if="form.menuType === '菜单'">
             <el-form-item label="组件路径" prop="component">
               <el-input v-model="form.component" placeholder="请输入组件路径" />
@@ -148,6 +154,8 @@
               <el-input v-model="form.perms" placeholder="请权限标识" maxlength="50" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item v-if="form.menuType !== '按钮'" label="显示状态">
               <el-radio-group v-model="form.hidden">

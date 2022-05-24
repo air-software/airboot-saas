@@ -58,7 +58,7 @@
           type="danger"
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="!ids.length"
           @click="handleDelete"
           v-hasPermi="['monitor:logininfor:remove']"
         >删除</el-button>
@@ -122,8 +122,6 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
-      // 非多个禁用
-      multiple: true,
       // 总条数
       total: 0,
       // 表格数据
@@ -168,7 +166,6 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.multiple = !selection.length
     },
     /** 删除按钮操作 */
     handleDelete(row) {

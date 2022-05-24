@@ -34,7 +34,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          type="primary"
+          type="success"
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
@@ -43,20 +43,10 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:post:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="danger"
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="!ids.length"
           @click="handleDelete"
           v-hasPermi="['system:post:remove']"
         >删除</el-button>
@@ -153,10 +143,6 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
       // 总条数
       total: 0,
       // 岗位表格数据
@@ -233,8 +219,6 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {

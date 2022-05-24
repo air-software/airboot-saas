@@ -40,15 +40,6 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          type="primary"
-          icon="el-icon-download"
-          size="mini"
-          @click="handleGenTable"
-          v-hasPermi="['tool:gen:code']"
-        >生成</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="info"
           icon="el-icon-upload"
           size="mini"
@@ -59,19 +50,19 @@
       <el-col :span="1.5">
         <el-button
           type="success"
-          icon="el-icon-edit"
+          icon="el-icon-download"
           size="mini"
-          :disabled="single"
-          @click="handleEditTable"
-          v-hasPermi="['tool:gen:edit']"
-        >修改</el-button>
+          :disabled="!ids.length"
+          @click="handleGenTable"
+          v-hasPermi="['tool:gen:code']"
+        >生成</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
           type="danger"
           icon="el-icon-delete"
           size="mini"
-          :disabled="multiple"
+          :disabled="!ids.length"
           @click="handleDelete"
           v-hasPermi="['tool:gen:remove']"
         >删除</el-button>
@@ -175,10 +166,6 @@ export default {
       ids: [],
       // 选中表数组
       tableNames: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
       // 总条数
       total: 0,
       // 表数据
@@ -257,8 +244,6 @@ export default {
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.tableNames = selection.map(item => item.tableName)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
     },
     /** 修改按钮操作 */
     handleEditTable(row) {
