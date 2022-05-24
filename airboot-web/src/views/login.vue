@@ -120,6 +120,7 @@ export default {
       })
     },
     getStorage() {
+      localStorage.removeItem('tenantId')
       const account = localStorage.getItem('account')
       const password = localStorage.getItem('password')
       const rememberMe = localStorage.getItem('rememberMe')

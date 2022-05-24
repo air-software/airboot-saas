@@ -73,31 +73,23 @@ npm run dev
 
 ## 演示截图
 
-![登录页](https://images.gitee.com/uploads/images/2021/0116/212040_462e9c28_1048972.png)
+![登录页](https://air-software.github.io/static/image/airboot-saas/login.png)
 
-![首页](https://images.gitee.com/uploads/images/2021/0116/212250_1f031428_1048972.png)
+![首页](https://air-software.github.io/static/image/airboot-saas/index.png)
 
-![用户管理](https://images.gitee.com/uploads/images/2021/0116/212311_4471004b_1048972.png)
+![租户管理](https://air-software.github.io/static/image/airboot-saas/tenant.png)
 
-![添加用户](https://images.gitee.com/uploads/images/2021/0116/212415_881e162e_1048972.png)
+![用户管理](https://air-software.github.io/static/image/airboot-saas/user.png)
 
-![角色权限](https://images.gitee.com/uploads/images/2021/0116/212434_044a8aed_1048972.png)
+![表单构建](https://air-software.github.io/static/image/airboot-saas/form-generator.png)
 
-![数据权限](https://images.gitee.com/uploads/images/2021/0116/212501_9da111fb_1048972.png)
+![代码生成](https://air-software.github.io/static/image/airboot-saas/gen.png)
 
-![添加菜单](https://images.gitee.com/uploads/images/2021/0116/212514_22002210_1048972.png)
+![代码生成-字段编辑](https://air-software.github.io/static/image/airboot-saas/gen-column.png)
 
-![表单构建](https://images.gitee.com/uploads/images/2021/0116/212528_4f95476c_1048972.png)
+![代码生成-生成信息](https://air-software.github.io/static/image/airboot-saas/gen-info.png)
 
-![代码生成](https://images.gitee.com/uploads/images/2021/0116/212558_c6e14738_1048972.png)
-
-![字段信息](https://images.gitee.com/uploads/images/2021/0116/212629_88b994a7_1048972.png)
-
-![字段信息枚举类](https://images.gitee.com/uploads/images/2021/0116/212701_5310a01f_1048972.png)
-
-![生成信息](https://images.gitee.com/uploads/images/2021/0116/212750_d0566be5_1048972.png)
-
-![代码预览](https://images.gitee.com/uploads/images/2021/0116/212817_0bdb35a3_1048972.png)
+![代码生成-预览](https://air-software.github.io/static/image/airboot-saas/gen-preview.png)
 
 ---
 
@@ -126,3 +118,10 @@ npm run dev
 `Spring-Security`的确是功能强大的权限框架，但一方面是较重，不符合Airboot-SaaS轻量级的理念。另一方面，如果想要用好`Spring-Security`的强大功能，需要对其有一定的熟练度，**这无疑会给想使用Airboot-SaaS进行二次开发的人设置了门槛**，所以我将其替换成了更易于理解和改造的自定义拦截器。
 
 我个人认为，权限这个东西，说通用也通用，说不通用也不通用，很多公司在权限上其实都会有自己的特殊需求。除非你的目的是做一个庞大且复杂的管理系统，否则没有必要考虑用`Spring-Security`。
+
+### 为什么本项目中的枚举几乎都是中文？
+
+1. 增加了代码的可读性，尤其对于业务类枚举来说（在某些专业领域的业务中更是如此），不必再绞尽脑汁想合适的专业英文翻译或拼音简写。除非你所在的项目团队有外国开发人员，或者你的开发/部署环境不支持中文字符；
+2. 中文枚举可以直接返回给前端作为字符串展示，大部分情况下不需要再次翻译给用户看。
+
+综上所述，我一直推荐使用中文来命名业务相关的枚举、常量或局部变量，但对于类似实体类的属性等不推荐使用中文，因为会导致getter和setter的方法名看起来很怪。
