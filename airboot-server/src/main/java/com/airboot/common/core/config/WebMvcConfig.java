@@ -5,13 +5,15 @@ import com.airboot.common.core.constant.Constants;
 import com.airboot.common.core.interceptor.RepeatSubmitInterceptor;
 import com.airboot.common.security.interceptor.AuthInterceptor;
 import com.airboot.common.security.interceptor.LoginInterceptor;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +34,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     
     @Resource
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
+    
+    @Resource
+    private HttpMessageConverters httpMessageConverters;
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -57,23 +62,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
     
     /**
-     * JSON序列化全局配置
+     * MappingJackson2HttpMessageConverter 实现了HttpMessageConverter 接口，
+     * httpMessageConverters.getConverters() 返回的对象里包含了MappingJackson2HttpMessageConverter
      */
+    @Bean
+    public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
+        return new MappingJackson2HttpMessageConverter(new JacksonMapper());
+    }
+    
     @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        // 针对分布式全局唯一Long型ID（比如Snowflake），需要统一转String给前端，以防止精度丢失
-        MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule simpleModule = new SimpleModule();
-        // 超出JS整数范围的值转为String，参考 JsonLongSerializer
-        simpleModule.addSerializer(Long.class, JsonLongSerializer.INSTANCE);
-        simpleModule.addSerializer(Long.TYPE, JsonLongSerializer.INSTANCE);
-        objectMapper.registerModule(simpleModule);
-        jackson2HttpMessageConverter.setObjectMapper(objectMapper);
-        converters.add(jackson2HttpMessageConverter);
-        
-        // 防止入参中有不匹配的属性时报400
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.addAll(httpMessageConverters.getConverters());
     }
     
     /**
